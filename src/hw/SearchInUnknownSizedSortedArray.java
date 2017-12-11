@@ -50,7 +50,7 @@ public class SearchInUnknownSizedSortedArray {
 	      int tmp = dict.get(mid);
 	      if (tmp == target){
 	        return mid;
-	      }else if (tmp < target){
+	      }else if (tmp > target){  // !!! not <
 	        return this.helper(dict, target, left, mid - 1);
 	      }else{
 	        return this.helper(dict, target, mid + 1, right);
