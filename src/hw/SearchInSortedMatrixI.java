@@ -29,7 +29,7 @@ public class SearchInSortedMatrixI {
 		      return new int[]{-1, -1};
 		    }
 		    int rows = matrix.length, cols = matrix[0].length;
-		    int msize = rows * cols;
+		    int msize = rows * cols;  // duplicated -1 here !!!!
 		    return this.helper(matrix, target, 0, msize - 1);
 		    
 		  }
