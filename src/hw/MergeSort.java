@@ -19,6 +19,46 @@ import utils.ConsolePrinter;
  *
  */
 
+class Solution {
+	  public int[] mergeSort(int[] arr) {
+	    if (arr == null || arr.length == 0){
+	      return arr;  // can't return [], wrong syntax
+	    }
+	    int[] helper = new int[arr.length];
+	    mSort(arr, helper, 0, arr.length - 1);
+	    return arr;
+	  }
+	  
+	  private void mSort(int[] arr, int[] helper, int left, int right){
+	    if (left >= right){
+	      return;
+	    }
+	    int mid = left + (right - left) / 2;
+	    mSort(arr, helper, left, mid);
+	    mSort(arr, helper, mid + 1, right);
+	    merge(arr, helper, left, mid, right);
+	  }
+	  
+	  private void merge(int[] arr, int[] helper, int left, int mid, int right){
+	    int i = left, j = mid + 1;
+	    // copy to helper for merge purpose
+	    for (int k = left; k <= right; k++){
+	      helper[k] = arr[k];
+	    }
+	    while (i <= mid && j <= right){
+	      if (helper[i] <= helper[j]){ // typo, should be j, not right here
+	        arr[left++] = helper[i++];
+	      } else {
+	        arr[left++] = helper[j++];
+	      }
+	    }
+	    while (i <= mid){
+	      arr[left++] = helper[i++];
+	    }
+	  }
+	}
+
+
 public class MergeSort {
 	public int[] mergeSort(int[] arr) {
 

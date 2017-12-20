@@ -15,7 +15,37 @@ package hw;
  * @author
  *
  */
+
 public class APowerB {
+	  public long power(int a, int b) {
+	    if (b == 0) {
+	      return 1;
+	    }
+	    long half = power(a, b/2); // use half instead of power(), save recursion complexity
+	    if ( b % 2 == 1) {
+	      return half * half * a;
+	    } else {
+	      return half * half;
+	    }
+	  }
+	}
+
+// ref
+class Power {
+	// Assumption: b >= 0
+	public long power(int a, int b) {
+		if (b == 0) {
+			return 1;
+		}
+		if (a == 1) {
+			return 0;
+		}
+		long half = power(a, b / 2);
+		return b % 2 == 0 ? half * half : half * half * a;
+	}
+} 
+
+class APowerB_self {
 	
 	public long power(int a, int b) {
 		// did not consider a is negative condition
