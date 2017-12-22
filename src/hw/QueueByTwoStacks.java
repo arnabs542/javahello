@@ -20,6 +20,54 @@ isEmpty() should return true if there is no element buffered in the queue, false
 import java.util.Stack;
 
 public class Solution {
+  private LinkedList<Integer> inStack;
+  private LinkedList<Integer> outStack;
+  
+  public Solution() {
+    // Write your solution here.
+    inStack = new LinkedList<Integer>();
+    outStack = new LinkedList<Integer>();
+  }
+  
+  private void checkMove() {
+    if (outStack.isEmpty()) {
+      while (!inStack.isEmpty()) {
+        outStack.offer(inStack.pollLast());
+      }
+    }
+  }
+  
+  public Integer poll() {
+    checkMove();
+    if (!outStack.isEmpty()) {
+      return outStack.pollLast();
+    }
+    return null;
+  }
+  
+  public void offer(int element) {
+    inStack.offer(element);
+  }
+  
+  public Integer peek() {
+    checkMove();
+    if (!outStack.isEmpty()) {
+      return outStack.peekLast();
+    }
+    return null;
+  }
+  
+  public int size() {
+    return inStack.size() + outStack.size();
+  }
+  
+  public boolean isEmpty() {
+    return inStack.isEmpty() && outStack.isEmpty();
+  }
+}
+
+
+class Solution1 {
 
 	private Stack<Integer> in_stack = new Stack<Integer>();
 	private Stack<Integer> out_stack = new Stack<Integer>();
