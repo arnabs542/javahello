@@ -18,6 +18,7 @@ isEmpty() should return true if there is no element buffered in the queue, false
  *
  */
 import java.util.Stack;
+import java.util.LinkedList;
 
 public class Solution {
   private LinkedList<Integer> inStack;
@@ -72,7 +73,7 @@ class Solution1 {
 	private Stack<Integer> in_stack = new Stack<Integer>();
 	private Stack<Integer> out_stack = new Stack<Integer>();
 
-	public Solution() {
+	public Solution1() {
 		// Write your solution here.
 		// Stack<Integer> in_stack = new Stack<Integer>();
 		// Stack<Integer> out_stack = new Stack<Integer>();
