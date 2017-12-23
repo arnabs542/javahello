@@ -22,7 +22,36 @@ L = 1 -> 2 -> 3 -> null, return 3 -> 2 -> 1 -> null
  *   }
  * }
  */
+
 public class Solution {
+	  public ListNode reverse(ListNode head) {
+		  //iterative way
+		    if (head == null || head.next == null) {
+		      return head;
+		    }
+		    ListNode left = null, right = head;
+		    while (right != null) {
+		      ListNode tmp = right.next;
+		      right.next = left;
+		      left = right;
+		      right = tmp;
+		    }
+		    return left;
+		  }
+	
+	  public ListNode reverse1(ListNode head) {
+	    // recursive way
+	    if (head == null || head.next == null) {
+	      return head;
+	    }
+	    ListNode newHead = reverse(head.next);
+	    ListNode nextNode = head.next;
+	    nextNode.next = head;
+	    head.next = null;
+	    return newHead;
+	  }
+	}
+class Solution1 {
   public ListNode reverse(ListNode head) {
     // write your solution here
     if (head == null)
