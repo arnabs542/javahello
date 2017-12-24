@@ -20,7 +20,30 @@ What if A is null or A of zero length? We should return -1 in this case.
  *
  */
 public class FirstOccurrence {
+	
 	  public int firstOccur(int[] arr, int target) {
+		    if (arr == null || arr.length == 0) {
+		      return -1;
+		    }
+		    int left = 0, right = arr.length - 1;
+		    while ( left + 1 < right) {
+		      int mid = left + (right - left) / 2;
+		      if (arr[mid] == target) {
+		        right = mid;
+		      } else if (arr[mid] < target) {
+		        left = mid + 1;
+		      } else {
+		        right = mid - 1;
+		      }
+		    }
+		    if (arr[left] == target) {
+		      return left;
+		    } else if (arr[right] == target) {
+		      return right;
+		    }
+		    return -1;
+		  }
+	  public int firstOccur1(int[] arr, int target) {
 		    if (arr == null || arr.length == 0)
 		      return -1;
 		    return this.searchFirst(arr, 0, arr.length - 1, target);  

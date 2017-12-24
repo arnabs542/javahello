@@ -3,7 +3,7 @@ package hw;
 /**
  * Data Structure
 Check If Linked List Has A Cycle
-Check if a given linked list has a cycle. Return true if it does, otherwise return false.
+Check if a given linked list has a cycle. Return true if it does, otherwise return false. 
 
  
 

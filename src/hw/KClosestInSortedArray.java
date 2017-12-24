@@ -21,6 +21,50 @@ A = {1, 4, 6, 8}, T = 3, K = 3, return {4, 1, 6}
  */
 public class KClosestInSortedArray {
 	  public int[] kClosest(int[] arr, int target, int k) {
+		    if ( arr == null || arr.length == 0 || k == 0) {
+		      return new int[0];
+		    }
+//		    if ( k == arr.length ) {
+//		      return arr;
+//		    }
+		    // this part is wrong, still need to consider the order for k == len
+		    int[] res = new int[k];
+		    int closest = findClosest(arr, target);
+		    res[0] = arr[closest];
+		    int left = closest - 1, right = closest + 1;
+		    for (int i = 1; i < k; i++) {
+		      // !!! should use abs here, not sure the value is pos or neg, diff from reference!!!
+		      if (left >= 0 && right < arr.length && Math.abs(target - arr[left]) <= Math.abs(arr[right] - target)
+		      || right >= arr.length ) {
+		        res[i] = arr[left--];
+		      } else {
+		        res[i] = arr[right++];
+		      }
+		    }
+		    return res;
+		  }
+		  
+		  private int findClosest(int[] arr, int target) {
+
+				    int left = 0, right = arr.length - 1;
+				    while (left + 1 < right) {
+				      int mid = left + (right - left) / 2;
+				      if (arr[mid] == target) {
+				        return mid;
+				      } else if (arr[mid] < target) {
+				        left = mid;
+				      } else {
+				        right = mid;
+				      }
+				    }
+				    if (Math.abs(arr[left] - target) < Math.abs(arr[right] - target)) {
+				      return left;
+				    } else {
+				      return right;
+				    }
+		  }
+	
+	  public int[] kClosest1(int[] arr, int target, int k) {
 		    if (arr == null || arr.length == 0){
 		      return arr;
 		    }

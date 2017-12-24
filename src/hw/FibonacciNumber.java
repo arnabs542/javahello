@@ -20,7 +20,25 @@ Is it possible the result fibonacci number is overflowed? We can assume it will 
  *
  */
 public class FibonacciNumber {
-	public long fibonacci(int K) {
+	  public long fibonacci(int K) {
+		    if (K < 0) {
+		      return 0;
+		    }
+		    if (K <= 1) {
+		      return K;
+		    }
+		    long a = 0, b = 1;
+		    int idx = 2;
+		    while (idx <= K) {
+		      long tmp = a + b;
+		      a = b;
+		      b = tmp;
+		      idx++;
+		    }
+		    return b;  // not a!!!!
+		  }
+	  
+	public long fibonacci1(int K) {
         // write your solution here
         if (K <= 0)
           return 0;

@@ -24,7 +24,30 @@ What if A is null or A is of zero length? We should return -1 in this case.
 
 import java.lang.Math;
 public class ClosestInSortedArray {
-  public int closest(int[] arr, int target) {
+	
+	 public int closest(int[] arr, int target) {
+		    if (arr == null || arr.length == 0) {
+		      return -1;
+		    }
+		    int left = 0, right = arr.length - 1;
+		    while (left + 1 < right) {
+		      int mid = left + (right - left) / 2;
+		      if (arr[mid] == target) {
+		        return mid;
+		      } else if (arr[mid] < target) {
+		        left = mid;
+		      } else {
+		        right = mid;
+		      }
+		    }
+		    if (Math.abs(arr[left] - target) < Math.abs(arr[right] - target)) {
+		      return left;
+		    } else {
+		      return right;
+		    }
+		  }	
+	
+  public int closest1(int[] arr, int target) {
 	    if (arr == null || arr.length == 0)
 	      return -1;
 	    return this.searchClose(arr, 0, arr.length - 1, target, 0);  

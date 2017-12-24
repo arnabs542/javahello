@@ -25,10 +25,43 @@ import utils.Dictionary;
 
 public class SearchInUnknownSizedSortedArray {
 
+	  public int search(Dictionary dict, int target) {
+		    if (dict == null) {
+		        return -1;
+		      }
+		      int left = 0, right = 1;
+		      // search for possible search bounds first
+		      while (dict.get(right) != null && dict.get(right) < target) {
+		        left = right;
+		        right *= 2;
+		      }
+		      // start binary search
+		      while (left <= right) {
+		        int mid = left + (right - left) / 2;
+		        if (dict.get(mid) == null || dict.get(mid) > target ) {
+		          right = mid -1;
+		        } else if (dict.get(mid) < target) {
+		          left = mid + 1;
+		        } else {
+		          return mid;
+		        }
+		        
+		        // int val = dict.get(mid);  // !!! still possible that git mid will return null;
+		        // if (val == target ) {
+		        //   return mid;
+		        // } else if (val < target) {
+		        //   left = mid + 1;
+		        // } else {
+		        //   right = mid - 1;
+		        // }
+		      }
+		      return -1;
+		  }
+	
 
 	// You do not need to implement the Dictionary interface.
 	// You can use it directly, the implementation is provided when testing your solution.
-	  public int search(Dictionary dict, int target) {
+	  public int search1(Dictionary dict, int target) {
 	    // Write your solution here
 	    if (dict == null)
 	      return -1;

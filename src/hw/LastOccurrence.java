@@ -22,7 +22,31 @@ What if A is null or A is array of zero length? We should return -1 in this case
  *
  */
 public class LastOccurrence {
-  public int lastOccur(int[] arr, int target) {
+	
+	  public int lastOccur(int[] arr, int target) {
+		    if (arr == null || arr.length == 0) {
+		      return -1;
+		    }  
+		    int left = 0, right = arr.length - 1;
+		    while (left + 1 < right) {
+		      int mid = left + (right - left) / 2;
+		      if (arr[mid] == target) {
+		        left = mid;
+		      } else if (arr[mid] < target) {
+		        left = mid + 1;
+		      } else {
+		        right = mid - 1;
+		      }
+		    }
+		    if (arr[right] == target) {
+		      return right;
+		    } else if (arr[left] == target) {
+		      return left;
+		    }
+		    return -1;
+		  }
+	
+  public int lastOccur1(int[] arr, int target) {
 	    if (arr == null || arr.length == 0)
 	      return -1;
 	    return this.searchLast(arr, 0, arr.length - 1, target);  

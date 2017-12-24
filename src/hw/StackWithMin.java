@@ -17,8 +17,62 @@ min() - return the current min value in the stack.
  */
 import java.util.PriorityQueue;
 import java.util.Stack;
+import java.util.LinkedList;
 
 public class Solution {
+	  private LinkedList<Integer> stack;
+	  private LinkedList<Tuple> minStack;  
+	  // the tuple of minvalue and its first pos (0 based) in stack
+	  
+	  public Solution() {
+	    // write your solution here
+	    stack = new LinkedList<Integer>();
+	    minStack = new LinkedList<Tuple>();
+	  }
+	  
+	  public int pop() {
+	    if (stack.isEmpty()) {
+	      return -1;
+	    }
+	    int res = stack.pollLast();
+	    // check if res is the min value 
+	    if (res == minStack.peekLast().val1 ) {
+	      if (stack.size() <= minStack.peekLast().val2 ) {
+	        minStack.pollLast();
+	      }
+	    }
+	    return res;
+	  }
+	  
+	  public void push(int element) {
+	    stack.offer(element);
+	    if (minStack.size() == 0 || element < minStack.peekLast().val1) {
+	      minStack.offer(new Tuple(element, minStack.size()));
+	    }
+	  }
+	  
+	  public int top() {
+	    return stack.size() == 0 ? -1 : stack.peekLast();
+	  }
+	  
+	  public int min() {
+	    return stack.size() == 0 ? -1 : minStack.peekLast().val1;
+	  }
+	}
+
+	class Tuple {
+	  public int val1;
+	  public int val2;
+	  
+	  public Tuple(int v1, int v2) {
+	    val1 = v1;
+	    val2 = v2;
+	  }
+	  
+	}
+
+
+class Solution_self {
   private Stack<Integer> stack = new Stack<Integer>();
   private PriorityQueue<Integer> pQueue = new PriorityQueue<Integer>();
   
