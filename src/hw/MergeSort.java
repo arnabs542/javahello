@@ -19,7 +19,48 @@ import utils.ConsolePrinter;
  *
  */
 
-class Solution {
+
+public class MergeSort {
+	  public int[] mergeSort(int[] arr) {
+	    if (arr == null || arr.length == 0) {
+	      return arr;
+	    }
+	    int[] store = new int[arr.length];
+	    helper(arr, 0, arr.length - 1, store);
+	    return arr;
+	  }
+	  
+	  private void helper(int[] arr, int left, int right, int[] store) {
+	    if (left >= right) {
+	      return;
+	    }
+	    int mid = left + (right - left) / 2;
+	    helper(arr, left, mid, store);
+	    helper(arr, mid + 1, right, store);
+	    merge(arr, left, mid, right, store);
+	  }
+	  
+	  private void merge(int[] arr, int left, int mid, int right, int[] store) {
+	    for (int i = left; i <= right; i++) {
+	      store[i] = arr[i];
+	    }
+	    int a = left, b = mid + 1;
+	    for (int i = left; i <= right; i++) {
+	      if (a <= mid && b <= right) {
+	        if (store[a] <= store[b]) {
+	          arr[i] = store[a++];  
+	        } else {
+	          arr[i] = store[b++];
+	        }
+	      } else if (a <= mid) {
+	        arr[i] = store[a++];
+	      }
+	    }
+	  }
+	}
+
+
+class Solution1 {
 	  public int[] mergeSort(int[] arr) {
 	    if (arr == null || arr.length == 0){
 	      return arr;  // can't return [], wrong syntax
@@ -59,7 +100,7 @@ class Solution {
 	}
 
 
-public class MergeSort {
+class MergeSort1 {
 	public int[] mergeSort(int[] arr) {
 
 		if (arr == null || arr.length == 0) {
