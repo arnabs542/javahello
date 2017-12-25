@@ -2,4 +2,4 @@ bin/*
 .idea/*
 .metadata/*
 *.iml
-
+**/*.class
