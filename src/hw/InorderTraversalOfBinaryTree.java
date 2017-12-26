@@ -43,7 +43,6 @@ The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
  *
  */
 
-
 /**
  * public class TreeNode {
  *   public int key;
@@ -57,29 +56,51 @@ The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
 import utils.TreeNode;
 
-public class InorderTraversalOfBinaryTree {
-  /**
-   * Recurisve way
-   * @param root
-   * @return
-   */
+public class InOrderTraversalOfBinaryTree {
+	/**
+	 * Recurisve way
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public List<Integer> inOrder(TreeNode root) {
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		if (root == null) {
+			return res;
+		}
+		TreeNode cur = root;
+		LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+		while (cur != null || !stack.isEmpty()) {
+			if (cur != null) {
+				res.add(cur.key); // !!!should be .key, not node
+				stack.offerLast(cur);
+				cur = cur.left;
+			} else {
+				cur = stack.pollLast();
+				cur = cur.right;
+			}
+		}
+		return res;
+	}
+
 	public List<Integer> inOrder_recursive(TreeNode root) {
-      ArrayList<Integer> res = new ArrayList<Integer>();
-      if (root == null){
-        return res;
-      }
-      helper(root, res);
-      return res;
-  }
-  
-  private void helper (TreeNode root, ArrayList<Integer> res) {
-    if (root == null) {
-      return;
-    }
-    helper(root.left, res);
-    res.add(root.key);  //java arraylist use add, not append; 2) root.key not root
-    helper(root.right, res);
-  }
+		ArrayList<Integer> res = new ArrayList<Integer>();
+		if (root == null) {
+			return res;
+		}
+		helper(root, res);
+		return res;
+	}
+
+	private void helper(TreeNode root, ArrayList<Integer> res) {
+		if (root == null) {
+			return;
+		}
+		helper(root.left, res);
+		res.add(root.key); // java arraylist use add, not append; 2) root.key not root
+		helper(root.right, res);
+	}
 }
