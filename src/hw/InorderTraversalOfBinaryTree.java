@@ -66,25 +66,26 @@ public class InOrderTraversalOfBinaryTree {
 	 * @param root
 	 * @return
 	 */
-	public List<Integer> inOrder(TreeNode root) {
-		ArrayList<Integer> res = new ArrayList<Integer>();
-		if (root == null) {
-			return res;
-		}
-		TreeNode cur = root;
-		LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
-		while (cur != null || !stack.isEmpty()) {
-			if (cur != null) {
-				res.add(cur.key); // !!!should be .key, not node
-				stack.offerLast(cur);
-				cur = cur.left;
-			} else {
-				cur = stack.pollLast();
-				cur = cur.right;
-			}
-		}
-		return res;
-	}
+	  public List<Integer> inOrder(TreeNode root) {
+		    
+		    ArrayList<Integer> res = new ArrayList<Integer>();
+		    if (root == null) {
+		      return res;
+		    }
+		    LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+		    TreeNode current = root;
+		    while (current != null || !stack.isEmpty()) {
+		      if (current != null) {
+		        stack.offerLast(current);
+		        current = current.left;
+		      } else {
+		        current = stack.pollLast();
+		        res.add(current.key); // !!! .key not node itself
+		        current = current.right;
+		      }
+		    }
+		    return res;
+		  }
 
 	public List<Integer> inOrder_recursive(TreeNode root) {
 		ArrayList<Integer> res = new ArrayList<Integer>();

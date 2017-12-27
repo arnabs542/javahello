@@ -11,6 +11,35 @@ public class TreeNode {
      this.key = key;
    }
    
+   public static TreeNode createTreeFromStringArr(String[] vals) {
+	   
+	   if (vals == null || vals.length == 0) {
+		   return null;
+	   }
+	   TreeNode root = new TreeNode(Integer.parseInt(vals[0]));
+	   int idx = 1;
+	   ArrayList<TreeNode> parents = new ArrayList<TreeNode>();
+	   parents.add(root);
+	   while (!parents.isEmpty()) {
+		   ArrayList<TreeNode> children = new ArrayList<TreeNode>();
+		   for (int i = 0; i < parents.size(); i++) {
+			   TreeNode cur = parents.get(i);
+			   cur.left = getNextNode(vals, idx++);
+			   if (cur.left != null) {
+				   children.add(cur.left);
+			   }
+			   cur.right = getNextNode(vals, idx++);
+			   if (cur.right != null) {
+				   children.add(cur.right);
+			   }
+		   }
+		   parents.clear();
+		   parents = children;
+	   }
+	   return root;
+	   
+   }
+   
    public static TreeNode createTreeFromString(String strNodes) {
 	   if (strNodes == null || strNodes.length() == 0) {
 		   return null;
@@ -57,6 +86,17 @@ public class TreeNode {
 		   return null;
 	   }
 	   TreeNode node = new TreeNode(Integer.parseInt(vals.get(idx)));
+	   return node;
+   }
+   
+   private static TreeNode getNextNode(String[] vals, int idx) {
+	   if (idx >= vals.length) {
+		   return null;
+	   }
+	   if (vals[idx].equals("#") || vals[idx].equals("null")) {
+		   return null;
+	   }
+	   TreeNode node = new TreeNode(Integer.parseInt(vals[idx]));
 	   return node;
    }
 }
