@@ -52,7 +52,7 @@ public class KSmallestInUnsortedArray {
 		}
 		
 //		Comparator<Integer> myCom = new Comparator<Integer>() {
-//			// @overide --> this is wrong, can't put overide here
+//			// @Overide 
 //			public int compare(Integer o1, Integer o2) {
 //				// do not use "==" here !!!
 //				if (o1.equals(o2)) {
