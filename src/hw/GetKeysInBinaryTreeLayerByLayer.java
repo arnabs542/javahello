@@ -83,8 +83,10 @@ The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
 public class GetKeysInBinaryTreeLayerByLayer {
 	public List<List<Integer>> layerByLayer(TreeNode root) {
 		ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
-		//ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(); 
-		// self ok, return res shows type mismatch, check comments above
+		//ArrayList<List<Integer>> res = new ArrayList<ArrayList<Integer>>(); 
+		// -- the above is also wrong 'type mismatch, can not convert from al<al<int>> to al<l<int>>'
+		// ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>(); 
+		// -- the above self ok, return res shows type mismatch, check comments above
 		
 		if (root == null) {
 			return res;
