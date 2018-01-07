@@ -20,8 +20,8 @@ package hw;
  * 
  * Examples
  * 
- * “ab” is a substring of “bcabc”, return 2 
- * “bcd” is not a substring of “bcabc”, return -1 
+ * "ab" is a substring of "bcabc", return 2 
+ * "bcd" is not a substring of "bcabc", return -1 
  * "" is substring of "abc", return 0
  * 
  * @author

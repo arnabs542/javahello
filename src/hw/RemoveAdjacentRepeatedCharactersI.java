@@ -10,9 +10,13 @@ package hw;
  * 
  * Assumptions
  * 
- * Try to do it in place. Examples
+ * Try to do it in place. 
  * 
- * “aaaabbbc” is transferred to “abc” Corner Cases
+ * Examples
+ * 
+ * "aaabbbc" is transferred to "bc" 
+ * 
+ * Corner Cases
  * 
  * If the given string is null, we do not need to do anything.
  * 
@@ -21,7 +25,20 @@ package hw;
  */
 public class RemoveAdjacentRepeatedCharactersI {
 	public String deDup(String input) {
-		// Write your solution here.
-		return input;
+		// try to convert the input to char[],
+		// and do it in place.
+		if (input == null || input.length() == 0) {
+			return input;
+		}
+		char[] arr = input.toCharArray();
+		int end = 0; // [0, end) are good area, end is current position to put new valid char
+		for (int i = 0; i < arr.length; i++) {
+			// repeated char will be ignored except the first char in the sequence
+			// which is i > 0 && arr[i] == arr[end - 1]
+			if ( i == 0 || arr[i] != arr[end - 1]) {
+				arr[end++] = arr[i];
+			}
+		}
+		return new String(arr, 0, end); // !! need to have start and end idx, not the whole arr is good.
 	}
 }
