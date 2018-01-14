@@ -9,7 +9,7 @@ import java.util.List;
  * 
  * Examples
  * 
- * Set = ¡°abc¡±, all permutations are [¡°abc¡±, ¡°acb¡±, ¡°bac¡±, ¡°bca¡±, ¡°cab¡±, ¡°cba¡±]
+ * Set = "abc", all permutations are ["abc", "acb", "bac", "bca", "cab", "cba"]
  * Set = "", all permutations are [""] Set = null, all permutations are []
  * 
  * @author
