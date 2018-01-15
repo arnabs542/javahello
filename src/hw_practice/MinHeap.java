@@ -1,6 +1,140 @@
 package hw_practice;
 
+import java.util.NoSuchElementException;
+
 public class MinHeap {
+
+    private int[] arr;
+    private int size;
+
+    public MinHeap(int[] array) {
+        if (array == null || array.length == 0) {
+            throw new IllegalArgumentException("input array can not be null or empty");
+        }
+        arr = array;
+        size = arr.length;
+        heapify();
+    }
+
+
+    private void heapify() {
+        for (int i = size / 2 - 1; i >= 0; i--) {
+            // percolateUp(i); not up here
+            percolateDown(i);
+        }
+    }
+
+    public MinHeap(int cap) {
+        if (cap <= 0) {
+            throw new IllegalArgumentException("capacity can not be <= 0");
+        }
+        arr = new int[cap];
+        size = 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public boolean isFull() {
+        return size == arr.length;
+    }
+
+    private void percolateUp(int idx) {
+        while (idx > 0) {
+            int parent = (idx - 1) / 2;
+            if (arr[parent] > arr[idx]) {
+                swap(arr, parent, idx);
+                idx = parent;
+            } else {
+                break;
+            }
+        }
+    }
+
+    private void percolateDown(int idx) {
+        while (idx <= size / 2 - 1) {
+            int leftChild = idx * 2 + 1;
+            int rightChild = idx * 2 + 1;
+            int candidate = leftChild;
+            if (rightChild <= size - 1 && arr[rightChild] < arr[leftChild]) {
+                candidate = rightChild;
+            }
+            if (arr[idx] > arr[candidate]) { // don't forget this comparison
+                swap(arr, idx, candidate);
+                idx = candidatae;
+            } else {
+                break;
+            }
+        }
+    }
+
+    private void swap(int[] arr, int a, int b) {
+        int tmp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = tmp;
+    }
+
+    public int peek() {
+        if (size == 0) {
+            return -1;
+        }
+        return arr[0];
+    }
+
+    public int poll() {
+        if (size == 0) {
+            throw new NoSuchElementException("heap is empty.");
+        }
+        int result = arr[0];
+        arr[0] = arr[size - 1];
+        size--; // decrease the size and BEFORE percolateDown()
+        percolateDown(0);
+        return result;
+    }
+
+    public void offer(int ele) {
+        // ref -- add resize;
+        if (size == arr.legnth) {
+            resize();
+        }
+        arr[size] = ele;
+        size++;
+        percolateUp(size - 1);
+    }
+
+    private void resize() {
+        int[] newArr = new Integer[arr.length * 1.5];
+        // actually here should avoid magic number, define a resizing factor!
+        System.arraycopy(arr, 0, newArr, 0, arr.length);
+        arr = newArr;
+    }
+
+    // return the original value
+    public int update(int idx, int ele) {
+        if (idx > size - 1 || idx < 0) {
+            throw new ArrayIndexOutOfBoundsException("invalid index range");
+        }
+        int result = arr[idx];
+        arr[idx] = ele;
+        if (result > ele) {
+            percolateUp(idx);
+        } else {
+            percolateDown(idx);
+        }
+        return result;
+    }
+
+
+
+}
+
+
+class MinHeap_self {
 
     private Integer[] arr;
     private int size;
@@ -20,7 +154,7 @@ public class MinHeap {
         }
         arr[size] = ele;
         size++;
-        percolateUp(size-1);
+        percolateUp(size - 1);
     }
 
     private void resize() {
@@ -28,6 +162,7 @@ public class MinHeap {
         for (int i = 0; i < arr.length; i++) {
             newArr[i] = arr[i];
         }
+        arr = newArr;
         // or can use arrayCopy
     }
 
