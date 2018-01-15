@@ -1,6 +1,7 @@
 package hw;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class AllPermutationsI {
 
-	public List<String> permutations(String set) {
+	public List<String> permutations1(String set) {
 		ArrayList<String> res = new ArrayList<String>();
 		if (set == null) {
 			return res;
@@ -46,7 +47,7 @@ public class AllPermutationsI {
 		}
 	}	
 	
-	// method 1, use swap method
+	// method 1, use DFS with swap method
 	public List<String> permutations1(String set) {
 		ArrayList<String> res = new ArrayList<String>();
 		if (set == null) {
@@ -99,5 +100,42 @@ public class AllPermutationsI {
 		char tmp = chars[a];
 		chars[a] = chars[b];
 		chars[b] = tmp;
+	}
+	
+	
+	// Method 2. main to the order of all the permutations.
+	public List<String> permutations(String set) {
+		List<String> result = new ArrayList<>();
+		if (set == null) {
+			return new ArrayList<String>();
+		}
+		char[] chars = set.toCharArray();
+		Arrays.sort(chars);
+		// record which index has been used in the original chars.
+		boolean[] used = new boolean[chars.length];
+		StringBuilder cur = new StringBuilder();
+		helperWithOrder(chars, used, cur, result);
+		return result;
+	}
+	
+	private void helperWithOrder(char[] chars, boolean[] used, StringBuilder cur, List<String> result) {
+		// termination condition:
+		// when the permutation contains all the characters in the original array.
+		if (cur.length() == chars.length) {
+			result.add(cur.toString());
+			return;
+		}
+		// when picking the next char, always according to the order.
+		for (int i = 0; i < chars.length; i++) {
+			// if a char is already used, we can not pick it for a second time.
+			if (!used[i]) {
+				used[i] = true;
+				cur.append(chars[i]);
+				helperWithOrder(chars, used, cur, result);
+				used[i] = false;
+				// cur.deleteCharAt(i); !!! this is wrong, cur's length is very different from i
+				cur.deleteCharAt(cur.length() - 1);
+			}
+		}
 	}
 }
