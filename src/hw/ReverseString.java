@@ -27,5 +27,23 @@ public class ReverseString {
 		char tmp = chars[a];
 		chars[a] = chars[b];
 		chars[b] = tmp;
+	} 
+	
+	// Method 2: recursive way
+	public String reverse_recursive (String input) {
+		if (input == null || input.length() <= 1) {
+			return input;
+		}
+		char[] chars = input.toCharArray();
+		reverseHelper(chars, 0, chars.length - 1);
+		return new String(chars);
+	}
+	
+	private void reverseHelper(char[] chars, int left, int right) {
+		if (left >= right) {
+			return;
+		}
+		swap(chars, left, right);
+		reverseHelper(chars, left + 1, right - 1);
 	}
 }
