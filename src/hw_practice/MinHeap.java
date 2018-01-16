@@ -66,7 +66,7 @@ public class MinHeap {
             }
             if (arr[idx] > arr[candidate]) { // don't forget this comparison
                 swap(arr, idx, candidate);
-                idx = candidatae;
+                idx = candidate;
             } else {
                 break;
             }
@@ -99,7 +99,7 @@ public class MinHeap {
 
     public void offer(int ele) {
         // ref -- add resize;
-        if (size == arr.legnth) {
+        if (size == arr.length) {
             resize();
         }
         arr[size] = ele;
@@ -149,7 +149,7 @@ class MinHeap_self {
 
     public void offer(Integer ele) {
         // ref -- add resize;
-        if (size >= arr.legnth) {
+        if (size >= arr.length) {
             resize();
         }
         arr[size] = ele;

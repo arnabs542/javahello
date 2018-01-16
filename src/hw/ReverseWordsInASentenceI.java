@@ -21,8 +21,5 @@ package hw;
  *
  */
 public class ReverseWordsInASentenceI {
-	public String reverseWords(String input) {
-		// Write your solution here.
-		return "";
-	}
+
 }

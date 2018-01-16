@@ -1,5 +1,8 @@
 package hw;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * String All Anagrams Find all occurrence of anagrams of a given string s in a
  * given string l. Return the list of starting indices.
@@ -15,6 +18,7 @@ package hw;
  *
  */
 public class AllAnagram {
+	// Assumptions: s is not null or empty. l is not null
 	public List<Integer> allAnagrams(String s, String l) {
 		// Write your solution here.
 		return new ArrayList<Integer>();
