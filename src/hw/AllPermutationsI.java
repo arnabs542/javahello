@@ -48,7 +48,7 @@ public class AllPermutationsI {
 	}	
 	
 	// method 1, use DFS with swap method
-	public List<String> permutations1(String set) {
+	public List<String> permutations11(String set) {
 		ArrayList<String> res = new ArrayList<String>();
 		if (set == null) {
 			return res;
