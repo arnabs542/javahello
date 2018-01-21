@@ -1,7 +1,11 @@
 package hw;
 
 /**
- * Recursion ReOrder Array Given an array of elements, reorder it as follow:
+ * Recursion 
+ * 
+ * ReOrder Array / String Shuffling
+ * 
+ * Given an array of elements, reorder it as follow:
  * 
  * { N1, N2, N3, …, N2k } → { N1, Nk+1, N2, Nk+2, N3, Nk+3, … , Nk, N2k }
  * 
@@ -28,4 +32,9 @@ public class ReOrderArray {
 		// Write your solution here.
 		return array;
 	}
+	
+
+
 }
+
+

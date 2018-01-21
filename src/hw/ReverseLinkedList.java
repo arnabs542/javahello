@@ -1,4 +1,7 @@
 package hw;
+
+import utils.ListNode;
+
 /**
  * Data Structure
 Reverse Linked List
@@ -23,7 +26,7 @@ L = 1 -> 2 -> 3 -> null, return 3 -> 2 -> 1 -> null
  * }
  */
 
-public class Solution {
+public class ReverseLinkedList {
 	  public ListNode reverse(ListNode head) {
 		  //iterative way
 		    if (head == null || head.next == null) {
@@ -41,6 +44,8 @@ public class Solution {
 	
 	  public ListNode reverse1(ListNode head) {
 	    // recursive way
+		// head == null is corner case
+		// head.next == null is recursion base case !!!! understand it clear!!!  
 	    if (head == null || head.next == null) {
 	      return head;
 	    }
@@ -51,7 +56,7 @@ public class Solution {
 	    return newHead;
 	  }
 	}
-class Solution1 {
+class RLLSolution1 {
   public ListNode reverse(ListNode head) {
     // write your solution here
     if (head == null)
