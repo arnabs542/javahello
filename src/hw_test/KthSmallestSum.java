@@ -8,9 +8,21 @@ import java.util.PriorityQueue;
  * Given two sorted arrays A and B, with their sizes to be m and n,
  * respectively. We can pick one element a from A and the other element b from
  * B, and their sum s is defined to be s = a + b. How to find k-th smallest s
- * from all possible values of s. Assumption: k < m * n. A[m] = {1, 4, 6,
- * 8,10бн...} B[n] = {1, 4, 5, 7, 8, бн.} k = 4, return 6. (smallest 1 + 1 = 2,
- * 2nd smallest 1 + 4 = 5, 3rd smallest 4 + 1 = 5, 4th smallest 1 + 5 = 6)
+ * from all possible values of s. 
+ * 
+ * Assumption: k < m * n. 
+ * 
+ * A[m] = {1, 4, 6, 8, 10......} 
+ * B[n] = {1, 4, 5, 7, 8, ...} 
+ * k = 4, 
+ * 
+ * return 6. 
+ * (
+ * smallest 1 + 1 = 2,
+ * 2nd smallest 1 + 4 = 5, 
+ * 3rd smallest 4 + 1 = 5, 
+ * 4th smallest 1 + 5 = 6.
+ * )
  * 
  * @author
  *

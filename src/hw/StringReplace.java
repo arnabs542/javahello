@@ -22,7 +22,7 @@ import javax.print.DocFlavor.INPUT_STREAM;
  */
 public class StringReplace {
 	// Method 1: Not using any String/StringBuilder utility,
-	// and using char[] todo it "in place".
+	// and using char[] to do it "in place".
 	public String replace(String input, String s, String t) {
 		// Assumptions: input, s, t are not null, s is not empty.
 		char[] array = input.toCharArray();
