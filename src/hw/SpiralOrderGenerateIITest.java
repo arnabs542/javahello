@@ -14,7 +14,7 @@ class SpiralOrderGenerateIITest {
         int[][] result = sol.spiralGenerate(m, n);
         assertEquals(answer.length, result.length);
         for (int i = 0; i < answer.length; i++) {
-        		assertArrayEquals(answer[i], result[i]);
+        	assertArrayEquals(answer[i], result[i]);
         }
       }
 	
