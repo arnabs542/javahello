@@ -1,0 +1,44 @@
+package hw;
+
+/**
+ * DP Longest Ascending SubArray Given an unsorted array, find the length of the
+ * longest subarray in which the numbers are in ascending order.
+ * 
+ * Assumptions
+ * 
+ * The given array is not null Examples
+ * 
+ * {7, 2, 3, 1, 5, 8, 9, 6}, longest ascending subarray is {1, 5, 8, 9}, length
+ * is 4.
+ * 
+ * {1, 2, 3, 3, 4, 4, 5}, longest ascending subarray is {1, 2, 3}, length is 3.
+ * 
+ * 
+ * @author
+ *
+ */
+public class LongestAscendingSubArray {
+	public int longest(int[] array) {
+		// assumptions: the gien array is not null.
+		if (array.length == 0) {
+			return 0;
+		}
+		// dp[i] = 1 				(array[i] <= array[i-1]
+		//       = dp[i-1] + 1  		(array[i] > array[i-1])
+		// So we can make the space consumption more efficient by 
+		// only recording the latest dp[i]
+		// ---> no need to use the extra space, cur to record 
+		// on current pos the length of the ascending array ending on it
+		int cur = 1;
+		int result = 1;
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] > array[i - 1]) {
+				cur++;
+				result = Math.max(result, cur);
+			} else {
+				cur = 1;
+			}
+		}
+		return result;
+	}
+}
