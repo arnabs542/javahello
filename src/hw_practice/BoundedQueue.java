@@ -58,14 +58,14 @@ public class BoundedQueue {
 
 	// self, think about resize when offer
 
-	public void offer(Integer ele) {
-		if (size == arr.length) {
-			resize();
-		}
-		arr[tail] = ele;
-		tail = (tail + 1) % arr.length;
-		size++;
-	}
+//	public void offer(Integer ele) {
+//		if (size == arr.length) {
+//			resize();
+//		}
+//		arr[tail] = ele;
+//		tail = (tail + 1) % arr.length;
+//		size++;
+//	}
 
 	private static final int SCALE_FACTOR = 2;
 	private void resize() {

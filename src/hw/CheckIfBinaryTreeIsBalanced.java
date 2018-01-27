@@ -1,5 +1,7 @@
 package hw;
 
+import utils.TreeNode;
+
 /**
  * Recursion
 Check If Binary Tree Is Balanced
@@ -67,7 +69,7 @@ The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
  *   }
  * }
  */
-public class Solution {
+public class CheckIfBinaryTreeIsBalanced {
   public boolean isBalanced(TreeNode root) {
     return getHeight(root) != -1;
   }

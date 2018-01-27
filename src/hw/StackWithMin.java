@@ -19,12 +19,12 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 import java.util.LinkedList;
 
-public class Solution {
+public class StackWithMin {
 	  private LinkedList<Integer> stack;
 	  private LinkedList<Tuple> minStack;  
 	  // the tuple of minvalue and its first pos (0 based) in stack
 	  
-	  public Solution() {
+	  public StackWithMin() {
 	    // write your solution here
 	    stack = new LinkedList<Integer>();
 	    minStack = new LinkedList<Tuple>();
@@ -72,11 +72,11 @@ public class Solution {
 	}
 
 
-class Solution_self {
+class StackWithMin_self {
   private Stack<Integer> stack = new Stack<Integer>();
   private PriorityQueue<Integer> pQueue = new PriorityQueue<Integer>();
   
-  public Solution() {
+  public StackWithMin_self() {
     // write your solution here
   }
   

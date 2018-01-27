@@ -31,7 +31,7 @@ L = 1 -> 2 -> 3 -> 4 -> null, return 2
  */
 import utils.ListNode;
 
-public class Solution {
+public class MiddleNodeOfLinkedList {
 	  public ListNode middleNode(ListNode head) {
 	    // write your solution here
 	    if(head == null)

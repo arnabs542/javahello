@@ -1,5 +1,7 @@
 package hw;
 
+import utils.ListNode;
+
 /**
  * Data Structure
 Check If Linked List Has A Cycle
@@ -22,7 +24,7 @@ Check if a given linked list has a cycle. Return true if it does, otherwise retu
  *   }
  * }
  */
-public class Solution {
+public class CheckIfLinkedListHasACycle {
   public boolean hasCycle(ListNode head) {
     if (head == null)
       return false;

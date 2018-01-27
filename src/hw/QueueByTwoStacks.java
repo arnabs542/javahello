@@ -20,11 +20,11 @@ isEmpty() should return true if there is no element buffered in the queue, false
 import java.util.Stack;
 import java.util.LinkedList;
 
-public class Solution {
+public class QueueByTwoStacks {
   private LinkedList<Integer> inStack;
   private LinkedList<Integer> outStack;
   
-  public Solution() {
+  public QueueByTwoStacks() {
     // Write your solution here.
     inStack = new LinkedList<Integer>();
     outStack = new LinkedList<Integer>();
@@ -68,12 +68,12 @@ public class Solution {
 }
 
 
-class Solution1 {
+class QueueByTwoStacks1 {
 
 	private Stack<Integer> in_stack = new Stack<Integer>();
 	private Stack<Integer> out_stack = new Stack<Integer>();
 
-	public Solution1() {
+	public QueueByTwoStacks1() {
 		// Write your solution here.
 		// Stack<Integer> in_stack = new Stack<Integer>();
 		// Stack<Integer> out_stack = new Stack<Integer>();

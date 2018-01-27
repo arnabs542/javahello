@@ -108,7 +108,7 @@ public class MinHeap {
     }
 
     private void resize() {
-        int[] newArr = new Integer[arr.length * 1.5];
+        int[] newArr = new int[(int)(arr.length * 1.5)];
         // actually here should avoid magic number, define a resizing factor!
         System.arraycopy(arr, 0, newArr, 0, arr.length);
         arr = newArr;
@@ -142,7 +142,7 @@ class MinHeap_self {
     private static final int INITIAL_CAP = 16;
 
 
-    public MinHeap(int cap) {
+    public MinHeap_self(int cap) {
         arr = new Integer[cap];
         size = 0;
     }

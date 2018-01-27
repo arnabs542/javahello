@@ -1,5 +1,7 @@
 package hw;
 
+import utils.ListNode;
+
 /**
  * Insert a value in a sorted linked list.
 
@@ -23,7 +25,7 @@ L = 2 -> 3 -> null, insert 1, return 1 -> 2 -> 3 -> null
  *   }
  * }
  */
-public class Solution {
+public class InsertInSortedLinkedList {
   public ListNode insert(ListNode head, int value) {
     // write your solution here
     ListNode target = new ListNode(value);
