@@ -139,3 +139,39 @@ public class AllPermutationsI {
 		}
 	}
 }
+
+class PracticeClassAllPermutation {
+	// 1. subproblem: n - 1 chars all per
+	// 2. recursion rule: for every perm, insert current char into all different pos, 
+	// 3. base case: 0 char,  ""-> "" ; or 1 char,  "a" -> "a"
+	public List<String> permutations(String input) {
+		List<String> results = new ArrayList<>();
+		if (input == null) {
+			return results;
+		}
+		List<String> res = helper(input, 0, results);
+		return res;
+	}
+	
+	// here idx is to optimize the substring operation, not for pass top-down info
+	private List<String> helper(String input, int idx, List<String> results) {
+		if (idx == input.length()) {
+			results.add("");
+			return results;
+		}
+		List<String> tmp = helper(input, idx + 1, results);
+		
+		// ["bc", "cb"]
+		
+		results = new ArrayList<>();
+		for (String s : tmp) {
+			// i is the pos to insert, all len + 1 positions
+			// here stringbuilder won't help, insert in the middle, sb only good for append.
+			for (int i = 0; i <= s.length(); i++) {
+				results.add(s.substring(0, i) + input.charAt(idx) + s.substring(i));
+			}
+		}
+		return results;
+	}
+	
+}

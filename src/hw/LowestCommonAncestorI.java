@@ -35,6 +35,43 @@ import utils.TreeNode;
  */
 
 public class LowestCommonAncestorI {
+	
+	// Assumptions: both a and b must be in the tree.
+	TreeNode LCA(TreeNode root, TreeNode a, TreeNode b) {
+		// teacher tang class ref
+		if (root == null || root == a || root == b) {
+			return root;
+		}
+		TreeNode lc = LCA(root.left, a, b);
+		TreeNode rc = LCA(root.right, a, b);
+		if (lc != null && rc != null) {
+			return root;
+		}
+		return lc == null ? rc : lc;
+	}
+	
+	TreeNode LCA_self_class_practice(TreeNode root, TreeNode a, TreeNode b) {
+		if (root == null) {
+			return null;
+		}
+		if (root == a || root == b) {
+			return root;
+		}
+		TreeNode lc = LCA(root.left, a, b);
+		TreeNode rc = LCA(root.right, a, b);
+		if (lc == null & rc == null) {
+			return null;
+		} else if (lc != null & rc != null) {
+			return root;
+		} else if (lc != null) {
+			return lc;
+		} else {
+			return rc;
+		}
+	}
+	
+	
+	
 	// ref
 	// return:
 	// null - there is no one or two in the subtree.
@@ -65,7 +102,7 @@ public class LowestCommonAncestorI {
 	// There is no parent pointer for the nodes in the binary tree
 	// The given two nodes are guaranteed to be in the binary tree
 	public TreeNode lowestCommonAncestor_selfAC(TreeNode root, TreeNode one, TreeNode two) {
-		if (root == null) {
+		if (root == null) { 
 			return null;
 		}
 		if (one == null) {

@@ -48,3 +48,71 @@ public class AllSubsetsI {
 		}
 	}
 }
+
+class PracticeClassSolution3 {
+	// pure recursion, does not need root to leaf pass value down(top-down path info),
+	// only built upon the value from bottom-up.
+	// 1. subproblem: n - 1 lelemtns's all subsets.
+	// 2. recursion rule: for each element in sublist, add or does not add current one
+	// 3. base case: 0 elements's all subsets [""]
+	public List<String> subSets(String input) {
+		List<String> result = new ArrayList<>();
+		if (input == null) {
+			return result;
+		}
+		helper(input, 0, result);
+		return result;
+	}
+	
+	private void helper(String input, int idx, List<String> result) {
+		// base case here
+		if (idx == input.length()) {
+			result.add("");
+			return;
+		}
+		
+		// recursion rule, add or not add current idx pos char, upon the results of (idx+1 to end of input)
+		helper(input, idx + 1, result);
+		int size = result.size();
+		for (int i = 0; i < size; i++) {
+			// original result is without current char
+			// now for each result already there, add current char
+			result.add(result.get(i) + input.charAt(idx));
+		}
+	}
+}
+
+class PracticeClassSolution3II {
+	// pure recursion, does not need root to leaf pass value down(top-down path info),
+	// only built upon the value from bottom-up.
+	// 1. subproblem: n - 1 lelemtns's all subsets.
+	// 2. recursion rule: for each element in sublist, add or does not add current one
+	// 3. base case: 0 elements's all subsets [""]
+	public List<String> subSets(String input) {
+		List<String> result = new ArrayList<>();
+		if (input == null) {
+			return result;
+		}
+		helper(input, result);
+		return result;
+	}
+	
+	// "abc"
+	private void helper(String problem, List<String> result) {
+		// base case here
+		if (problem.isEmpty()) {
+			result.add("");
+			return;
+		}
+		
+		// recursion rule, add or not add current idx pos char, upon the results of (idx+1 to end of input)
+		helper(problem.substring(1), result);
+		// ["", "b", "c", "bc" | "a", "ab", "ac", "abc"]
+		int size = result.size();
+		for (int i = 0; i < size; i++) {
+			// original result is without current char
+			// now for each result already there, add current char
+			result.add(result.get(i) + problem.charAt(0));
+		}
+	}
+}
