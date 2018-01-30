@@ -24,10 +24,20 @@ package hw;
 public class MaxProductOfCuttingRope {
 	public int maxProduct(int length) {
 		// Assumptions: length >= 2.
+		// and length can only cut into integers ??? what if not only integers?
 		if (length == 2) {
 			return 1;
 		}
 		int[] array = new int[length + 1];
+		// array[i] means that for length i, the max product of all possible cuts
+		// because product can be accumulated. (a*b*c) = (a*b) * c, so 
+		// the basic idea is to assume that arr[i-1] is done, then arr[i] can be
+		// get by get max of all possible arr[j] * arr[i-j], but still one case not 
+		// covered. arr[j]/[i-j] is at least one cut within itself. 
+		// for arr[i], the arr[j]/[i-j] can have zero cut. 
+		// therefore, arr[i] 
+		
+		// array[0] = 1, can't do this, because at least one cut, m > 1
 		array[1] = 0;
 		array[2] = 1;
 		for (int i = 3; i < array.length; i++) {
@@ -36,7 +46,9 @@ public class MaxProductOfCuttingRope {
 			for (int j = 1; j <= i / 2; j++) {
 				// For the other partition, we can choose not cutting it or
 				// cutting it, so the max number we can get is either i = j or array[i - j].
-				array[i] = Math.max(array[i], j * Math.max(i - j,  array[i - j]));
+				// array[i] = Math.max(array[i], j * Math.max(i - j,  array[i - j])); // --> ref idea, need to ask why???
+				// array[i] = Math.max(array[i], array[j] * array[i - j]);  // wrong, missing the arr[j] zero cut case.
+				array[i] = Math.max(array[i], Math.max(j, array[j]) * Math.max((i-j), array[i-j]));  // --> self, AC
 			}
 		}
 		return array[length];

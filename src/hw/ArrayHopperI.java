@@ -24,8 +24,52 @@ package hw;
  *
  */
 public class ArrayHopperI {
-	// Method 3: Greedy solution.
 	
+	public boolean canJump_self_AC(int[] array) {
+		// Assumptions: array is not null and is not empty.
+		if (array.length == 1) {
+			return true;
+		}
+		int furthest = 0;
+		for (int i = 0; i < array.length; i++) {
+		  if (furthest < i) {
+		    return false;
+		  }
+		  furthest = Math.max(furthest, i + array[i]);
+		  if (furthest >= array.length - 1) {
+		    return true;
+		  }
+		}
+		return true;
+	}
+	
+	// Method 3: Greedy solution.
+	// Keep the max index reachable by jumping x steps, and 
+	// the max index reachable by jumping x+1 steps.
+	public boolean canJumpIII(int[] array) {
+		// Assumptions: array is not null and is not empty.
+		if (array.length == 1) {
+			return true;
+		}
+		// the max index jumping current steps can reach.
+		int cur = 0;
+		// the max index jumping current + 1 steps can reach.
+		int next = 0;
+		for (int i = 0; i < array.length; i++) {
+			if (i > cur) {
+				// if i > cur, we can not use current steps to jump to i.
+				if (cur == next) {
+					// cur == next means there is no progress for 
+					// using current + 1 steps, if that is the case,
+					// we can never reach end of array.
+					return false;
+				}
+				cur = next;
+			}
+			next = Math.max(next, i + array[i]);
+		}
+		return true;
+	}
 	
 	// ???
 	// Method 2: DP, canJump[i] means from index i,
