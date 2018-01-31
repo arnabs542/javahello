@@ -6,7 +6,7 @@ package hw;
  * 
  * Examples
  * 
- * 5(¡°0101¡±) and 8(¡°1000¡±) has 3 different bits
+ * 5(??0101??) and 8(??1000??) has 3 different bits
  * 
  *  2147483647,-2147483648 --> 32
  * 
