@@ -23,11 +23,11 @@ public class LongestAscendingSubArray {
 		if (array.length == 0) {
 			return 0;
 		}
-		// dp[i] = 1 				(array[i] <= array[i-1]
-		//       = dp[i-1] + 1  		(array[i] > array[i-1])
-		// So we can make the space consumption more efficient by 
+		// dp[i] = 1 (array[i] <= array[i-1]
+		// = dp[i-1] + 1 (array[i] > array[i-1])
+		// So we can make the space consumption more efficient by
 		// only recording the latest dp[i]
-		// ---> no need to use the extra space, cur to record 
+		// ---> no need to use the extra space, cur to record
 		// on current pos the length of the ascending array ending on it
 		int cur = 1;
 		int result = 1;
@@ -41,4 +41,47 @@ public class LongestAscendingSubArray {
 		}
 		return result;
 	}
+
+	public int longest_self_afterClass_AC2(int[] array) {
+		// Basic idea: optimize space upon the first way.-->
+		// DP of 1d, use dp[i] to record the longest
+		// ascending subarray ends on position i.
+		if (array == null || array.length == 0) {
+			return 0;
+		}
+		int n = array.length;
+		int maxLen = 1;
+		int cur = 1;
+		for (int i = 1; i < n; i++) {
+			if (array[i] > array[i - 1]) {
+				cur += 1;
+				maxLen = Math.max(maxLen, cur);
+			} else {
+				cur = 1;
+			}
+		}
+		return maxLen;
+	}
+
+	public int longest_self_afterClass_AC(int[] array) {
+		// Basic idea: DP of 1d, use dp[i] to record the longest
+		// ascending subarray ends on position i.
+		if (array == null || array.length == 0) {
+			return 0;
+		}
+		int n = array.length;
+		int maxLen = 1;
+		int[] dp = new int[n];
+		dp[0] = 1;
+		for (int i = 1; i < n; i++) {
+			if (array[i] > array[i - 1]) {
+				dp[i] = dp[i - 1] + 1;
+				maxLen = Math.max(maxLen, dp[i]);
+			} else {
+				dp[i] = 1;
+			}
+		}
+		return maxLen;
+	}
+
 }

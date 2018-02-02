@@ -24,4 +24,13 @@ class MaxProductOfCuttingRopeTest {
 		assertEquals(answer, result);
 	}
 	
+	@Test
+	void testMaxProduct_case3() {
+		MaxProductOfCuttingRope sol = new MaxProductOfCuttingRope();
+		int length = 25;
+		int answer = 8748; 
+		int result = sol.maxProduct(length);
+		assertEquals(answer, result);
+	}
+	
 }

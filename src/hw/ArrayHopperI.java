@@ -4,7 +4,7 @@ package hw;
  * 
  * DP
  * 
- * Array Hopper I 
+ * Array Hopper I
  * 
  * Given an array A of non-negative integers, you are initially positioned at
  * index 0 of the array. A[i] means the maximum jump distance from that position
@@ -24,7 +24,7 @@ package hw;
  *
  */
 public class ArrayHopperI {
-	
+
 	public boolean canJump_self_AC(int[] array) {
 		// Assumptions: array is not null and is not empty.
 		if (array.length == 1) {
@@ -32,19 +32,19 @@ public class ArrayHopperI {
 		}
 		int furthest = 0;
 		for (int i = 0; i < array.length; i++) {
-		  if (furthest < i) {
-		    return false;
-		  }
-		  furthest = Math.max(furthest, i + array[i]);
-		  if (furthest >= array.length - 1) {
-		    return true;
-		  }
+			if (furthest < i) {
+				return false;
+			}
+			furthest = Math.max(furthest, i + array[i]);
+			if (furthest >= array.length - 1) {
+				return true;
+			}
 		}
 		return true;
 	}
-	
+
 	// Method 3: Greedy solution.
-	// Keep the max index reachable by jumping x steps, and 
+	// Keep the max index reachable by jumping x steps, and
 	// the max index reachable by jumping x+1 steps.
 	public boolean canJumpIII(int[] array) {
 		// Assumptions: array is not null and is not empty.
@@ -59,7 +59,7 @@ public class ArrayHopperI {
 			if (i > cur) {
 				// if i > cur, we can not use current steps to jump to i.
 				if (cur == next) {
-					// cur == next means there is no progress for 
+					// cur == next means there is no progress for
 					// using current + 1 steps, if that is the case,
 					// we can never reach end of array.
 					return false;
@@ -70,8 +70,8 @@ public class ArrayHopperI {
 		}
 		return true;
 	}
-	
-	// ???
+
+	// --> after class understand
 	// Method 2: DP, canJump[i] means from index i,
 	// can jump to index array.length - 1
 	public boolean canJumpII(int[] array) {
@@ -88,6 +88,12 @@ public class ArrayHopperI {
 			} else {
 				// if any of the reachable indices from index i
 				// is reachable to the end of the array.
+				// --> self
+				// j is the distance you can jump from pos i,
+				// from i onward, positions [i, i+j]
+				// any position has canJump[] = true,
+				// then canJump[i] is true 
+				// <--
 				for (int j = array[i]; j >= 1; j--) {
 					if (canJump[j + i]) {
 						canJump[i] = true;
@@ -98,8 +104,7 @@ public class ArrayHopperI {
 		}
 		return canJump[0];
 	}
-	
-	
+
 	// Method 1: DP, boolean canJump[i] means from index 0, can jump to index i.
 	public boolean canJump(int[] array) {
 		// Assumptions: array is not null and is not empty.
