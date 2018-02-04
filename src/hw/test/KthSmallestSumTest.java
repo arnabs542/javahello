@@ -1,4 +1,4 @@
-package hw_test;
+package hw.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 

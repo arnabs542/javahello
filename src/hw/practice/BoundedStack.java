@@ -1,4 +1,4 @@
-package hw_practice;
+package hw.practice;
 /**
  * Use array to implement a queue
  *

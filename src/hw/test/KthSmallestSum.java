@@ -1,4 +1,4 @@
-package hw_test;
+package hw.test;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;

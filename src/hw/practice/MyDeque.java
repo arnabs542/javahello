@@ -1,4 +1,4 @@
-package hw_practice;
+package hw.practice;
 
 public class MyDeque {
 
