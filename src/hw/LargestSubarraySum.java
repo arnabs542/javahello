@@ -19,6 +19,30 @@ package hw;
  */
 public class LargestSubarraySum {
 
+	// follow up 2: how to return the left , right bounds of the subarray
+	public int[] largestSum_self_followup2(int[] arr) {
+		// assume that arr not null and arr.length > = 1;
+		int solLeft = 0;
+		int solRight = 0;
+		int curLeft = 0;
+		int solMax = arr[0];
+		int cur = arr[0];
+		for (int i = 1; i < arr.length; i++) {
+			if (cur < 0) {
+				cur = arr[i];
+				curLeft = i;
+			} else {
+				cur += arr[i];
+			}
+			if (cur > solMax) {
+				solLeft = curLeft;
+				solRight = i;
+				solMax = cur; //!! important, don't forget
+			}
+		}
+		return new int[] { solLeft, solRight };
+	}
+
 	public int largestSum_self_AC(int[] arr) {
 		int result = arr[0];
 		int dp = arr[0];
@@ -45,4 +69,17 @@ public class LargestSubarraySum {
 		}
 		return result;
 	}
+
+	public static void main(String[] args) {
+		// int[] arr = new int[] { 2, -1, 4, -2, 1 }; // expect: {0, 2}
+		int[] arr = new int[] { -2, -1, -3 }; // expect: {1, 1}
+		LargestSubarraySum sol = new LargestSubarraySum();
+		int[] bounds = sol.largestSum_self_followup2(arr);
+
+		for (int i : bounds) {
+			System.out.println(i);
+		}
+
+	}
+
 }

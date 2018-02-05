@@ -38,6 +38,7 @@ public class DictionaryWordI {
 		// Notice: sometimes it will be handy to have such index matching,
 		// canBreak[i] mens index (i-1) in input, also
 		// can represent the substring(0,i).
+		// --> self: i: the length, mapping to input is position i-1 !!!
 		boolean[] canBreak = new boolean[input.length() + 1];
 		canBreak[0] = true;
 		for (int i = 1; i < canBreak.length; i++) {
