@@ -2,6 +2,7 @@ package hw.ood.parkinglot;
 
 // access label: public? package private?
 class ParkingSpot {
+	private static final float FEE_RATE = 2.0f;  // assume this is the fee rate, and same for different VehichleSize.
 	private final VehicleSize size;
 	private Vehicle currentVehicle; // null if no vehicle is parked inside
 	
@@ -23,9 +24,9 @@ class ParkingSpot {
 	 */
 	boolean fit(Vehicle v) {
 		if (currentVehicle == null) {
-			// TODO
-			
-			
+			if (currentVehicle.getSize().sizeValue() <= size.sizeValue()) {
+				return true;
+			}
 		}
 		return false;
 	}

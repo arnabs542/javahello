@@ -3,10 +3,10 @@ package hw.practice;
 import java.util.Arrays;
 
 public class MyHashMapRef<K, V> {
-	public static class Node<K, V> {
+	private static class Node<K, V> {
 		private final K key;
 		private V value;
-		Node<K, V> next = null;
+		private Node<K, V> next = null;
 		
 		public Node(K k, V v) {
 			key = k;
@@ -24,6 +24,15 @@ public class MyHashMapRef<K, V> {
 		public void setValue(V v) {
 			value = v;
 		}
+		
+		Node<K, V> getNext() {
+			return next;
+		}
+		
+		void setNext(Node<K, V> next) {
+			this.next = next;
+		}
+		
 	}
 	
 	private static final int INIT_CAP = 16;
@@ -56,7 +65,7 @@ public class MyHashMapRef<K, V> {
 			if (equalsKey(node.getKey(), key)) {
 				return node.getValue();
 			}
-			node = node.next;
+			node = node.getNext();
 		}
 		return null;
 	}
@@ -67,7 +76,7 @@ public class MyHashMapRef<K, V> {
 			if (equalsKey(node.getKey(), key)) {
 				return true;
 			}
-			node = node.next;
+			node = node.getNext();
 		}
 		return false;
 	}
@@ -82,12 +91,12 @@ public class MyHashMapRef<K, V> {
 				node.setValue(value);
 				return oldValue;
 			}
-			node = node.next;
+			node = node.getNext();
 		}
 		// case 2: no existing node, need to add new entry
 		// first insert, then check if need rehashing.
 		Node<K, V> newEntry = new Node<>(key, value);
-		newEntry.next = array[i];
+		newEntry.setNext(array[i]);
 		array[i] = newEntry;
 		size++; // !!! don't forget
 		if (needRehashing()) {
@@ -103,15 +112,15 @@ public class MyHashMapRef<K, V> {
 		while (curr != null) {
 			if (equalsKey(curr.getKey(), key)) {
 				if (prev == null) {
-					array[i] = curr.next;
+					array[i] = curr.getNext();
 				} else {
-					prev = curr.next;
+					prev = curr.getNext();
 				}
 				size--;
 				return curr.getValue();
 			}
 			prev = curr;
-			curr = curr.next;
+			curr = curr.getNext();
 		}
 		return null;
 	}
@@ -140,9 +149,9 @@ public class MyHashMapRef<K, V> {
 		array = (Node<K, V>[]) new Node[old.length * 2];
 		for (Node<K, V> e : old) {
 			while (e != null) {
-				Node<K, V> next = e.next;
+				Node<K, V> next = e.getNext();
 				int i = index(e.getKey());
-				e.next = array[i];
+				e.setNext(array[i]);
 				array[i] = e;
 				e = next;
 			}

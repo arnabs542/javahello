@@ -49,7 +49,7 @@ public class MyHashMap<K, V> {
 	// starting the parts of MyHashMap	
 	private static final int INITIAL_CAPACITY = 10;
 	private static final float LOAD_FACTOR = 0.75f; // by default decimal values mean double, adding f at the end
-	private static final float SCALE_FACTOR = 2.0f;
+	private static final int SCALE_FACTOR = 2;
 	
 	private MyEntry<K, V>[] buckets;
 	private int size = 0;
@@ -70,33 +70,28 @@ public class MyHashMap<K, V> {
 		return hash % buckets.length;
 	}
 	
-	private boolean matchKeys(K key1, K key2) {
-		if (key1 == null && key2 == null) {
-			return true;
-		} else if (key1 == null || key2 == null) {
-			return false;
-		} else {
-			return key1.equals(key2);
-		}
+	private boolean equalsKey(K key1, K key2) {
+//		if (key1 == null && key2 == null) {
+//			return true;
+//		} else if (key1 == null || key2 == null) {
+//			return false;
+//		} else {
+//			return key1.equals(key2);
+//		}
+		return key1 == key2 || key1 != null && key1.equals(key2);
 	}
 	
-	// ???
+	// ???, not necessary to write a separate one
 	private MyEntry<K, V> findEntry(K key) {
 		int index = getIndex(key);
-		MyEntry<K, V> head = buckets[index];
-		if (head == null) {
-			return null;
-		} else {
-			MyEntry<K, V> cur = head;
-			while (cur != null) {
-				if (matchKeys(key, cur.getKey())) {
-					return cur;
-				} else {
-					cur = cur.getNext();
-				}
-			}
-			return null;
+		MyEntry<K, V> cur = buckets[index];
+		while (cur != null) {
+			if (equalsKey(key, cur.getKey())) {
+				return cur;
+			} 
+			cur = cur.getNext();
 		}
+		return null;
 	} 
 	
 	// !!! good style to put private members together, and public members after, do not mix.
@@ -108,8 +103,44 @@ public class MyHashMap<K, V> {
 	// 2) if not, if it reaches the loading factor / initial size and need to resize??
 	public V put(K key, V value) {
 		int index = getIndex(key);
+		MyEntry<K, V> node = buckets[index];
+		while (node != null) {
+			if (equalsKey(node.getKey(), key)) {
+				V oldValue = node.getValue();
+				node.setValue(value);
+				return oldValue;
+			}
+			node = node.getNext();
+		}
+		// here no existing node is found, create a new one.
+		MyEntry<K, V> newNode = new MyEntry(key, value);
+		newNode.next = buckets[index];
+		buckets[index] = newNode;
+		size++; // !!! don't forget
+		// check if need to resize or not
+		if (needResize()) {
+			rehash();
+		}
+		return null;
 		
-		
+	}
+	
+	private boolean needResize() {
+		return size > (buckets.length * LOAD_FACTOR);
+	}
+	
+	private void rehash() {
+		MyEntry<K, V>[] oldArr = buckets;
+		buckets = (MyEntry<K, V>[]) new MyEntry[oldArr.length * SCALE_FACTOR];
+		for (MyEntry<K, V> node : oldArr) {
+			while (node != null) {
+				MyEntry<K, V> next = node.getNext();
+				int index = getIndex(node.getKey());
+				node.setNext(buckets[index]);
+				buckets[index] = node;
+				node = next;
+			}
+		}
 	}
 	
 	public V get(K key) {
@@ -124,7 +155,7 @@ public class MyHashMap<K, V> {
 				// !!! think about when key is null !!! 
 				// !!! think about may need to reuse, define a separate method.
 				// if (key.equals(cur.getKey())) {
-				if (matchKeys(key, cur.getKey())) {
+				if (equalsKey(key, cur.getKey())) {
 					return cur.getValue();
 				} else {
 					cur = cur.getNext();
@@ -140,8 +171,23 @@ public class MyHashMap<K, V> {
 	}
 	
 	public V remove(K key) {
-		MyEntry<K, V> entry = findEntry(key);
-		
+		int index = getIndex(key);
+		MyEntry<K, V> node = buckets[index];
+		MyEntry<K, V> prev = null;
+		while (node != null) {
+			if (equalsKey(node.getKey(), key)) {
+				if (prev == null) {
+					buckets[index] = node.next;
+				} else {
+					prev.setNext(node.getNext());
+				}
+				size--; //!!!! important, don't forget
+				return node.getValue();
+			}
+			prev = node;
+			node = node.getNext();
+		}
+		return null;
 	}
 	
 	public boolean isEmpty() {

@@ -30,7 +30,7 @@ public class ParkingLot {
 	
 	public boolean hasSpot(Vehicle v) {
 		//TODO: check each level, for each level, can Level hasSpot(Vehicle)
-		for (Level l: levels) {
+		for (Level l : levels) {
 			if (l.hasSpot(v)) {
 				return true;
 			}
@@ -39,24 +39,33 @@ public class ParkingLot {
 	}
 	
 	//TODO: park
-	public ParkingTicket park(Vehicle v) {
-		if (hasSpot(v)) {
-			ParkingTicket ticket = new ParkingTicket();
-			return ticket;
+	public boolean park(Vehicle v) {
+		// check each level for place to park
+		// update spot, level, lot, ticket.
+		for (Level l : levels) {
+			if (l.hasSpot(v)) {
+				l.park(v);
+				return true;
+			}
 		}
-		return null;
-		
+		return false;
 	}
 	
 	//TODO: leave
-	
+	public void leave(Vehicle v) {
+		// find vehicle - spot mapping and leave.
+		// update spot, level, lot, ticket.
+		for (level l : levels) {
+			
+		}
+	}	
 	
 	/**
 	 * Extensions:
 	 * 1. how to track vehicle-spot mapping (more efficient leave method implementation) ?
 	 * 		i.e., what if we want to know the spot for a given vehicle?
 	 * 
-	 * OOD: performance / efficiency is still important !!! This is hwere you use data structures
+	 * OOD: performance / efficiency is still important !!! This is where you use data structures
 	 *  and algorithms!
 	 *  
 	 *  (HashMap<VehicleSize, List<>>

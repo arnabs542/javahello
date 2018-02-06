@@ -1,6 +1,7 @@
 package hw.ood.parkinglot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 class Level {
@@ -39,6 +40,7 @@ class Level {
 	
 	boolean leave(Vehicle v) {
 		//TODO: scan all the parking spots in this level and call ParkingSpot#leave
+		
 	}
 	
 
