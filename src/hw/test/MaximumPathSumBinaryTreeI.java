@@ -133,6 +133,38 @@ public class MaximumPathSumBinaryTreeI {
 		}
 		
 	}
+	
+	///////////////////////////////////////////////////////////////////////////////////
+	// written during midterm II
+	
+	public int maxPathSum_mt (TreeNode root) {
+		int[] result = new int[]{Integer.MIN_VALUE};
+		dfs(root, result);
+		return result[0];
+	}
+
+	private int dfs_mt(TreeNode root, int[] result) {
+		if (root == null) {
+			return 0;
+	}
+	int leftSum = dfs_mt(root.left, result);
+	int rightSum = dfs_mt(root.right, result);
+
+	// return single path
+	// update the global path with join path
+	if (root.left != null && root.right != null) {
+		result[0] = Math.max(leftSum + rightSum + root.key, result[0]);
+		return Math.max(leftSum, rightSum) + root.key;
+	} else if (root.left != null) {
+		// right is null
+		return leftSum + root.key;
+	} else {
+	//left is null, right may/may not be null
+		return rightSum + root.key;
+	}
+	}
+
+	
 
 	public static void main(String[] args) {
 		//TreeNode root = TreeNode.createTreeFromStringArr(new String[] { "-6", "-8", "2", "11", "#", "-1", "8", "2" }); // 9
