@@ -18,7 +18,7 @@ import utils.ConsolePrinter;
  * 
  * The given array is not null Examples
  * 
- * {1, 2, 2, 3, 3, 3} → {1}
+ * {1, 2, 2, 3, 3, 3} -> {1}
  * 
  * Medium Array
  * 
@@ -38,12 +38,16 @@ public class ArrayDeduplicationIII {
 		for (int i = 1; i < array.length; i++) {
 			if (array[i] == array[end]) {
 				// if there is duplicate, set flag and do nothing.
+				// --> this will continue the loop for i++ until encounter a different char
+				// while end is on the repeated value char position.
 				flag = true;
 			} else if (flag == true) {
 				// if array[i] != array[end], and flag is set,
 				// array[end] should not be included in the valid subarray,
 				// and we can just replace it with array[i] since next
 				// we are going to check if there is any duplicate of array[i].
+				// --> now the current end is the last repeated char
+				// should be overwritten by the new char on [i], which is different from end
 				array[end] = array[i];
 				// reset flag to false since we are processing another element now.
 				flag = false;
@@ -54,6 +58,7 @@ public class ArrayDeduplicationIII {
 				array[++end] = array[i];
 			}
 		}
+		// --> note for the last char, still need to consider two cases
 		return Arrays.copyOf(array, flag ? end: end + 1);
 	}
 	

@@ -22,31 +22,73 @@ package hw.test;
  * 
  * Medium Array String Exam 1
  * 
+ * Time: O(n^2)
+ * Space: O(n^2)
+ * 
  * @author
  *
  */
 public class MinimumCutsForPalindromes {
+	
+
 	public int minCuts(String input) {
+		// written in google doc in midterm
+		if (input == null || input.length() <= 1) {
+			return 0;
+		}
+		int n = input.length();
+		char[] chars = input.toCharArray();
+		int[] minCuts = new int[n + 1];
+		minCuts[0] = -1;
+		// minCuts[i]: min cuts for string [0, i-1], len = i.
+		boolean[][] isPal = new boolean[n + 1][n + 1];
+		// isPal[i][j]: string [i-1, j-1] is palinedrome or not.
+
+		for (int i = 1; i <= n; i++) {
+			minCuts[i] = i - 1;  // !!! miss the whole statement here, will always have wrong answer 0
+			for (int j = i; j >= 1; j--) { // !!! miss int here
+				if (chars[i - 1] == chars[j - 1]) {
+					if (i - 1 <= j + 1 || isPal[j + 1][i - 1]) { //!!! typo, not i-1 <= j+1
+						isPal[j][i] = true;
+						minCuts[i] = Math.min(minCuts[i], minCuts[j - 1] + 1); // should be j-1 here @~9:30pm
+						continue;
+					}
+
+				}
+				// do nothing, update isPal.
+				isPal[j][i] = false;
+
+			}
+		}
+		return minCuts[n];
+	}
+
+	public int minCuts_self_AC(String input) {
 		if (input == null || input.length() <= 1) {
 			return 0;
 		}
 		char[] chars = input.toCharArray();
 		int n = chars.length;
-		boolean[][] isPal = new boolean[n+1][n+1];
+		boolean[][] isPal = new boolean[n + 1][n + 1];
 		// substring[i-1, j-1] is palindrome or not.
 		int[] minCut = new int[n + 1];
-		minCut[0] = -1; // important!! since when for the whole string is palindrome, use 0 cut, --> con't
-		// but method use 1+minCut[end-1], so need to set [0] as -1 to get the number out.
+		minCut[0] = -1; // important!! since when for the whole string is palindrome, use 0 cut, -->
+						// con't
+		// but method use 1+minCut[end-1], so need to set [0] as -1 to get the number
+		// out.
 		// minCut[i]: string of length i, substring[0, i-1]
 		for (int i = 2; i <= n; i++) {
 			minCut[i] = i - 1;
 			for (int j = i; j >= 1; j--) { // not >= 0, should be >= 1
-				// because the index meaning of i, j should be the same, and --> isPal's index --> j's stop range
-				if (chars[j-1] == chars[i-1]) {
+				// because the index meaning of i, j should be the same, and --> isPal's index
+				// --> j's stop range
+				if (chars[j - 1] == chars[i - 1]) {
 					if (j + 1 >= i - 1 || isPal[j + 1][i - 1] == true) {
 						isPal[j][i] = true;
-						minCut[i] = Math.min(minCut[i], 1 + minCut[j-1]); // since [j-1, i-1] is palindrome, here should be j-1, not minCut[j]
-						// since j - 1 can be 0, which means whole string is palindrome, either put extra check here, or put minCut[0] = -1 before
+						minCut[i] = Math.min(minCut[i], 1 + minCut[j - 1]); // since [j-1, i-1] is palindrome, here
+																			// should be j-1, not minCut[j]
+						// since j - 1 can be 0, which means whole string is palindrome, either put
+						// extra check here, or put minCut[0] = -1 before
 					} else {
 						isPal[j][i] = false;
 					}
@@ -84,11 +126,11 @@ public class MinimumCutsForPalindromes {
 		}
 		return minCuts[len] - 1;
 	}
-	
+
 	public static void main(String[] args) {
 		MinimumCutsForPalindromes sol = new MinimumCutsForPalindromes();
-		String input = "ababbbabbababa"; // expect 3
-		String input1 = "aaaaaabbabb"; // expect 1
+		String input1 = "ababbbabbababa"; // expect 3
+		String input = "aaaaaabbabb"; // expect 1
 		int result = sol.minCuts(input);
 		System.out.println(result);
 	}
