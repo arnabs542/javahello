@@ -19,6 +19,42 @@ package hw;
  */
 public class LargestSubarraySum {
 
+	// quiz: follow up, return largest sum, left, right bounds
+	public int[] largestSum_self_quiz1(int[] array) {
+		// Assumptions: array is not null and length >= 1.
+		int[] result = new int[3];
+		int n = array.length;
+		int[] dp = new int[n];
+		// dp[i]: the biggest sum of subarray that ends on
+		// index i.
+		dp[0] = array[0];
+		result[0] = array[0];
+		int left = 0;
+		result[1] = left;
+		for (int i = 1; i < n; i++) {
+			if (dp[i - 1] >= 0) {
+				// extend the subarray
+				dp[i] = dp[i - 1] + array[i];
+
+			} else {
+				// reset dp, left
+				dp[i] = array[i];
+				left = i;
+			}
+			// need to test for every i.
+			// not only when extending subarray.
+			// think about neg val array!!!
+			if (dp[i] >= result[0]) {
+				result[0] = dp[i];
+				result[1] = left;
+				result[2] = i;
+			}
+		}
+		return result;
+	}
+
+	///////////////////////////////////////////
+
 	// follow up 2: how to return the left , right bounds of the subarray
 	public int[] largestSum_self_followup2(int[] arr) {
 		// assume that arr not null and arr.length > = 1;
@@ -37,7 +73,7 @@ public class LargestSubarraySum {
 			if (cur > solMax) {
 				solLeft = curLeft;
 				solRight = i;
-				solMax = cur; //!! important, don't forget
+				solMax = cur; // !! important, don't forget
 			}
 		}
 		return new int[] { solLeft, solRight };
