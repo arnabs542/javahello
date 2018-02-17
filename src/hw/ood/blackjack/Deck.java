@@ -20,9 +20,15 @@ public class Deck {
 		}
 	}
 	
-	// todo
+	
 	public void shuffle() {
-		
+		for (int i = 0; i < cards.size() - 1; i++) {
+			int j = random.nextInt(cards.size() - i) + i;
+			Card card1 = cards.get(i);
+			Card card2 = cards.get(j);
+			cards.set(i, card2);
+			cards.set(j, card1);
+		}
 	}
 	
 	private int remainingCards() {
