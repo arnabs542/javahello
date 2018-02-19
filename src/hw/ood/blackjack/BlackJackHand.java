@@ -20,9 +20,14 @@ public class BlackJackHand  extends Hand{
 				maxUnder = score;
 			}
 		}
+		// --> if there is possible score that under 21, take it; otherwise, maxUnder is Integer.MIN_VALUE
+		// --> have to be the minOver value. The result is to find the most benifical value for self.
+		// --> either maxUnder or minOver (will be compared with other hands)
 		return maxUnder == Integer.MIN_VALUE ? minOver : maxUnder;
 	}
 	
+	// --> because cards like Ace will have multiple possible values,
+	// find all possible scores for current hand.
 	private List<Integer> possibleScores() {
 		List<Integer> scores = new ArrayList<>();
 		for (Card card : cards) {
@@ -31,6 +36,10 @@ public class BlackJackHand  extends Hand{
 		return scores;
 	}
 	
+	// for a new card, update the possible scores
+	// if the new card have multiple possible score
+	// will extend the scores length to record all possible
+	// total scores.
 	private void updateScores(Card card, List<Integer> scores) {
 		final int[] toAdd = getScores(card);
 		if (scores.isEmpty()) {
@@ -39,9 +48,13 @@ public class BlackJackHand  extends Hand{
 			}
 		} else {
 			final int length = scores.size();
+			// for every existing scores,
 			for (int i = 0; i < length; i++) {
 				int oldScore = scores.get(i);
+				// update scores[i] with the first score of new card
 				scores.set(i, oldScore + toAdd[0]);
+				// for other score of new card, add new total score 
+				// with scores[i] as old score and toAdd[j] as incrementing score
 				for (int j = 1; j < toAdd.length; j++) {
 					scores.add(oldScore + toAdd[j]);
 				}
@@ -63,6 +76,7 @@ public class BlackJackHand  extends Hand{
 		return score() > 21;
 	}
 	
+	// check if the current hand is blackjack
 	public boolean isBlackJack() {
 		if (cards.size() != 2) {
 			return false;
