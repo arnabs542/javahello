@@ -23,12 +23,13 @@ class ParkingSpot {
 	 * @return
 	 */
 	boolean fit(Vehicle v) {
-		if (currentVehicle == null) {
-			if (currentVehicle.getSize().sizeValue() <= size.sizeValue()) {
-				return true;
-			}
-		}
-		return false;
+//		if (currentVehicle == null) {
+//			if (currentVehicle.getSize().sizeValue() <= size.sizeValue()) {
+//				return true;
+//			}
+//		}
+//		return false;
+		return currentVehicle == null && size.sizeValue() >= v.getSize().sizeValue();
 	}
 	
 	/**
@@ -37,10 +38,12 @@ class ParkingSpot {
 	 */
 	void park(Vehicle v) {
 		currentVehicle = v;
+		System.out.print("Vehicle " + v.toString() + " parks at " + this.toString());
 	}
 	
 	void leave() {
 		currentVehicle = null;
+		System.out.println("Vehicle " + this.toString() + " is leaving.");
 	}
 	
 	Vehicle getVehicle() {

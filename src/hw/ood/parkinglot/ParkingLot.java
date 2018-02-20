@@ -35,10 +35,9 @@ public class ParkingLot {
 				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
-	//TODO: park
 	public boolean park(Vehicle v) {
 		// check each level for place to park
 		// update spot, level, lot, ticket.
@@ -51,13 +50,15 @@ public class ParkingLot {
 		return false;
 	}
 	
-	//TODO: leave
-	public void leave(Vehicle v) {
+	public boolean leave(Vehicle v) {
 		// find vehicle - spot mapping and leave.
 		// update spot, level, lot, ticket.
-		for (level l : levels) {
-			
+		for (Level l : levels) {
+			if (l.leave(v)) {
+				return true;
+			}
 		}
+		return false;
 	}	
 	
 	/**
