@@ -1,8 +1,13 @@
 package hw;
 
-public class AAA {
-
-	// q2.4c, input = m {}, n [], k ()
-	public List<String> 
+public class AAA<T, K> {
+	private T value;
+	public T getValue() {
+		return value;
+	}
+	
+	public void setValue(K v) {
+		System.out.println("passing in type: " + String.valueOf(K) + v);
+	}
 	
 }
