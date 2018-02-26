@@ -1,6 +1,8 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.stream.Collectors;
 
 public class TreeNode {
@@ -98,6 +100,30 @@ public class TreeNode {
 	   }
 	   TreeNode node = new TreeNode(Integer.parseInt(vals[idx]));
 	   return node;
+   }
+   
+   public static void printTree(TreeNode root) {
+	   if (root == null) {
+		   return;
+	   }
+	   StringBuilder sb = new StringBuilder();
+	   Deque<TreeNode> queue = new LinkedList<>();
+	   queue.offerLast(root);
+	   while (!queue.isEmpty()) {
+		   int lsize = queue.size();
+		   for (int i = 0; i < lsize; i++) {
+			   TreeNode cur = queue.pollFirst();
+			   if (cur == null) {
+				   sb.append("#, ");
+				   continue;
+			   }
+			   sb.append(cur.key+", ");
+			   queue.offerLast(cur.left);
+			   queue.offerLast(cur.right);
+		   }
+		   sb.append("\r\n");
+	   }
+	   System.out.println(sb.toString());
    }
 }
 
