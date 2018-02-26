@@ -24,11 +24,49 @@ import utils.TreeNode;
  */
 
 public class BinarySearchTreeDelete {
+	// REF, check "How to remove a target node from BST"
+	public TreeNode delete(TreeNode root, int key) {
+		if (root == null) {
+			return null;
+		}
+		if (key == root.key) {
+			if (root.left == null) {
+				return root.right;
+			} else if (root.right == null) {
+				return root.left;
+			} else if (root.right.left == null) {
+				root.right.left = root.left;
+				return root.right;
+			} else {
+				TreeNode newRoot = deleteSmallest(root.right);
+				newRoot.left = root.left;
+				newRoot.right = root.right;
+				return newRoot;
+			}
+		} else if (key > root.key) {
+			root.right = delete(root.right, key);
+		} else {
+			root.left = delete(root.left, key);
+		}
+		return root;
+	}
+	
+	private TreeNode deleteSmallest(TreeNode root) {
+		while (root.left.left != null) {
+			root = root.left;
+		}
+		TreeNode smallest = root.left;
+		root.left = root.left.right;
+		return smallest;
+	}
+	
+	
+	
 	// find the target node, and delete
 	// replace it with the right-most leaf of it's left subtree
 	// do it in a recursive way
 	// if key does not exist in the tree, do nothing and return root?
-	public TreeNode delete(TreeNode root, int key) {
+	public TreeNode delete_self_ok(TreeNode root, int key) {
 		if (root == null) {
 			return null;
 		}
@@ -37,6 +75,7 @@ public class BinarySearchTreeDelete {
 			if (root.left == null) {
 				return root.right;
 			}
+			// case 2, root has left sub tree, find the max node (may not be leaf (00 childrend)) from left subtree
 			TreeNode leaf = deleteMaxLeftNode(root); // !! should not pass root.left
 			leaf.left = root.left;
 			leaf.right = root.right;
