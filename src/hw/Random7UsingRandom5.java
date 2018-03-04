@@ -1,7 +1,18 @@
 package hw;
 
 public class Random7UsingRandom5 {
-	// On lc.com, you can directly call RandomFive.random5() to 
+	public int random7_self() {
+		while (true) {
+			int val = RandomFive.random5() * 5 + RandomFive.random5();
+			if (val < 21) {
+				return val % 7;
+			}
+
+		}
+		// return 0; -- unreachable statement
+	}
+
+	// On lc.com, you can directly call RandomFive.random5() to
 	// get a random number in the range of 0 - 4.
 	public int random7() {
 		while (true) {
@@ -14,4 +25,4 @@ public class Random7UsingRandom5 {
 			}
 		}
 	}
- }
+}
