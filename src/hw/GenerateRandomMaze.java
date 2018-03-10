@@ -1,3 +1,4 @@
+package hw;
 /**
  * 
  * Randomly generate a maze of size N * N (where N = 2K + 1) whose corridor and
