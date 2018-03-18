@@ -58,6 +58,11 @@ public class KthSmallestInTwoSortedArrays {
 		// in the samllest k elements.
 		int amid = aleft + k / 2 - 1;
 		int bmid = bleft + k / 2 - 1;
+		//--> why when amid > a.length, it's ok to set aval to Max?
+		//--> so for sure a[left:] will be included in next recursion
+		//--> why is it right? cause we are looking for kth ele,
+		// try k/2 in a and k/2 in b. if a has less than k/2 eles, for sure 
+		// b[bleft, bleft + k/2 - 1] can be removed from next recursion --> only k/2 removed
 		int aval = amid >= a.length ? Integer.MAX_VALUE : a[amid];
 		int bval = bmid >= b.length ? Integer.MAX_VALUE : b[bmid];
 		if (aval <= bval) {
@@ -65,6 +70,15 @@ public class KthSmallestInTwoSortedArrays {
 		} else {
 			return kth(a, aleft, b, bmid + 1, k - k / 2);
 		}
+	}
+	
+	public static void main(String[] args) {
+		int[] arr1 = new int[] {1, 1, 100};
+		int[] arr2 = new int[] {1, 1, 3, 4};
+		int k = 5;
+		KthSmallestInTwoSortedArrays sol = new KthSmallestInTwoSortedArrays();
+		int result = sol.kth(arr1, arr2, k);
+		System.out.println(result);
 	}
 
 }
