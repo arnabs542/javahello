@@ -33,12 +33,19 @@ public class MaxWaterTrappedI {
 		if (array.length == 0) {
 			return 0;
 		}
+		// --> [left, right]: unknown area to explore.
 		int left = 0;
 		int right = array.length - 1;
 		int leftMax = array[left];
 		int rightMax = array[right];
 		int result = 0;
-		while (left < right) {
+		//--> no need for left = right because one of them will be current taller bar,
+		// the other will be moving towards it. (fanzheng: The taller bar if capable for storing water,
+		// would be reached by either left/right, and will be calced the storage, and moved on, because
+		// the leftMax/rightMax will be taller than it, and left/right will stop on one of left/right -->
+		// the taller bar will NOT be the one that (left/right stops on AND capable to store water).
+		// so no need for == case.
+		while (left < right) { 
 			if (array[left] <= array[right]) {
 				result += Math.max(0, leftMax - array[left]);
 				leftMax = Math.max(leftMax, array[left]);
@@ -94,8 +101,11 @@ public class MaxWaterTrappedI {
 	public static void main(String[] args) {
 		MaxWaterTrappedI sol = new MaxWaterTrappedI();
 		int[] bars1 = new int[] { 2, 1, 3, 2, 4 }; // expect 2
-		int[] bars = new int[] { 5, 3, 2, 1, 4, 6 }; // expect 10
+		int[] bars2 = new int[] { 5, 4, 2, 1, 3, 6 }; // expect 10
 		int[] bars3 = new int[] { 5, 3, 2 }; // expect 0
+		int[] bars4 = new int[] { 2, 8, 3, 6, 4, 5 }; // expect 4
+		int[] bars = new int[] { 5, 1, 4, 2, 3, 6 }; // expect 10
+
 
 		int result = sol.maxTrapped(bars);
 		System.out.println(result);
