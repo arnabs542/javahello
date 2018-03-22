@@ -20,7 +20,7 @@ package hw;
  */
 public class CuttingWoodI {
 	public int minCost(int[] cuts, int length) {
-		// Assumptions: cuts is not null, length >= 0, all cuts are alid numbers.
+		// Assumptions: cuts is not null, length >= 0, all cuts are valid numbers.
 		// --> helper means all possible places to cut, adding 0 and length positions.
 		// First we need to pad the original array at leftmost and right most 
 		// position.
@@ -31,9 +31,9 @@ public class CuttingWoodI {
 		}
 		helper[helper.length - 1] = length;
 		// minCost[i][j]: the min cost of cutting the cuts (i, j); --> note! i, j are not wood length, but cuts (helper) index!!!
-		// -- if between i, j there is no more cut allowed, mingCost[i][j] = 0
-		// -- otherwise, minCost[i][j] = min(minCost[i][k] + minCost[k][j]) + j - i, 
-		// ---------- (cont') for any i < k < j, where k is the possibel cut place
+		// -- if between i, j there is no more cut allowed, minCost[i][j] = 0
+		// -- otherwise, minCost[i][j] = min(minCost[i][k] + minCost[k][j]) + A[j] - A[i], 
+		// ---------- (cont') for any i < k < j, where k is the possible cut place
 		// final result is the minCost[0][length];
 		int n = helper.length;
 		int[][] minCost = new int[n][n];
