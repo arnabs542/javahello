@@ -32,8 +32,51 @@ public class ChainStrings {
 	// current string’s last char.
 
 	// first string and
-
+	
 	public boolean canChain(String[] arr) {
+		// Assumption: arr is not null and not empty
+		// no empty string in it.
+		// base case
+		if (arr.length == 1 && arr[0].charAt(0) == arr[0].charAt(arr[0].length() - 1)) {
+			return true;
+		}
+		return helper(arr, 1);
+	}
+	
+	private boolean helper(String[] arr, int idx) {
+		if (idx == arr.length) {
+			return (arr[arr.length - 1].charAt(arr[arr.length - 1].length() - 1) == arr[0].charAt(0));
+		}
+		char tail = arr[idx - 1].charAt(arr[idx - 1].length() - 1);
+		boolean flag = false;
+		for (int i = idx; i < arr.length; i++) {
+			if (tail == arr[i].charAt(0)) {
+				flag = true;
+				swap(arr, idx, i);
+				boolean result = helper(arr, idx + 1);
+				if (result) {
+					return true;
+				}
+				swap(arr, idx, i);
+			}
+		}
+		if (!flag) {
+			return false;
+		}
+		return false;
+	}
+	
+	private void swap(String[] arr, int a, int b) {
+		String tmp = arr[a];
+		arr[a] = arr[b];
+		arr[b] = tmp;
+	}
+	
+	
+
+	/////////////////////////////////////////////////////////////
+	
+	public boolean canChain_mainIdeaOK_ImpleWrong(String[] arr) {
 		// Assumption: arr is not null and not empty.
 		// no empty string in it.
 
@@ -49,11 +92,11 @@ public class ChainStrings {
 		return check(arr, 1, path, used);
 
 	}
-
+	
 	private boolean check(String[] arr, int idx, int[] path, boolean[] used) {
 		if (idx == arr.length - 1) {
 			// not enough time, use [-1] for last char ….
-			if (arr[path[idx]].charAt(-1) == arr[path[0]].charAt(0)) {
+			if (arr[path[idx]].charAt(arr[path[idx]].length()-1) == arr[path[0]].charAt(0)) {
 				return true;
 			} else {
 				return false;
@@ -61,8 +104,8 @@ public class ChainStrings {
 		}
 		boolean flag = false;
 		for (int i = idx; i < arr.length; i++) {
-			char tail = arr[path[idx - 1]].charAt(-1);
-
+			char tail = arr[path[idx - 1]].charAt(arr[path[idx - 1]].length()-1);
+			System.out.println(tail);
 			if (!used[i] && tail == arr[i].charAt(0)) {
 				flag = true;
 				used[i] = true;
@@ -78,6 +121,14 @@ public class ChainStrings {
 			}
 		}
 		return false;
+	}
+	
+	public static void main(String[] args) {
+		ChainStrings sol = new ChainStrings();
+		String[] arr = new String[]{"aaa", "bbb", "baa", "aab"};
+		boolean rst = sol.canChain(arr);
+		System.out.println(rst);
+		
 	}
 
 }
