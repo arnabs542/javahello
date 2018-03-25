@@ -33,19 +33,20 @@ public class InsertSpacesInString {
 	// decided whether to insert space.
 	private void dfs(char[] chars, int idx, StringBuilder buffer, List<String> result) {
 		if (idx == chars.length - 1) {
-		// base case, only add char,
+			// base case, only add char,
+			buffer.append(chars[idx]);
+			result.add(buffer.toString());
+			buffer.deleteCharAt(buffer.length() - 1); // !!! important, last one also need to delete
+			return;
+		}
 		buffer.append(chars[idx]);
-	result.add(buffer.toString());
-		return;
-	}
-	buffer.append(chars[idx]);
-	// not add space
-	dfs(chars, idx + 1, buffer, result);
-	// add space
-	buffer.append(' ');
-	dfs(chars, idx + 1, buffer, result);
-	buffer.deleteCharAt(buffer.length()- 1);  // !!! length() not size()
-	buffer.deleteCharAt(buffer.length()- 1);
+		// not add space
+		dfs(chars, idx + 1, buffer, result);
+		// add space
+		buffer.append(' ');
+		dfs(chars, idx + 1, buffer, result);
+		buffer.deleteCharAt(buffer.length() - 1); // !!! length() not size()
+		buffer.deleteCharAt(buffer.length()- 1); // !!! need to delete one more !!!, space and the char itself!!!
 	}
 
 	private void printStrings(List<String> output) {
@@ -53,13 +54,12 @@ public class InsertSpacesInString {
 			System.out.println(line);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		InsertSpacesInString sol = new InsertSpacesInString();
 		String str = "ABC"; // expect: ABC AB_C A_BC A_B_C
 		sol.printStringSpace(str.toCharArray());
-		
-		
+
 	}
 
 }

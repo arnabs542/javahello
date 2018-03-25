@@ -125,5 +125,21 @@ public class TreeNode {
 	   }
 	   System.out.println(sb.toString());
    }
+   
+   public static TreeNode getNode(TreeNode root, int target) {
+	   if (root == null) {
+		   return null;
+	   }
+	   if (root.key == target) {
+		   return root;
+	   }
+	   TreeNode left = getNode(root.left, target);
+	   if (left != null) {
+		   return left;
+	   }
+	   TreeNode right = getNode(root.right, target);
+	   return right;
+	   
+   }
 }
 
