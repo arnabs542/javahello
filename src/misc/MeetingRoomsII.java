@@ -94,7 +94,7 @@ class MeetingRoomsII_heap {
 	// use heap as a resource pool,
 	// when need new resource (no existing resource can be released and reuse), put into pool; 
 	// when there is a resource can be reused (meeting x ends earlier than meeting y), poll from pool (consumed)
-	// and this new room by meeting y will be put to pool (meeting room with new ending time)
+	// and this new room by meeting y will be put to pool (
 	// at the end, the pool shows how many resources are used.
 	
     public int minMeetingRooms_heap(Interval[] intervals) {
