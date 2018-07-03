@@ -35,6 +35,9 @@ public class WiggleSort {
 	 * if for odd, if not bigger, swap with i - 1
 	 * for even, if not smaller, swap with i - 1
 	 * 
+	 * time: O(nlogn)
+	 * space: O(n)
+	 * 
 	 * @param nums
 	 */
     public void wiggleSort(int[] nums) {
