@@ -1,7 +1,6 @@
 package misc;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * 
@@ -40,13 +39,195 @@ Sort ColorsKth Largest Element in an ArrayWiggle Sort
  */
 public class WiggleSortII {
 	/**
+	 * 
+	 * Step by step explanation of index mapping in Java
+37.8K
+VIEWS
+198
+Last Edit: June 21, 2018 9:34 PM
+
+shuoshankou
+shuoshankou
+ 347
+The virtual index idea in the post https://leetcode.com/discuss/77133/o-n-o-1-after-median-virtual-indexing
+is very brilliant! However, it takes me a while to understand why and how it works. There is no 'nth_element' in Java, but you can use 'findKthLargest' function from "https://leetcode.com/problems/kth-largest-element-in-an-array/" to get the median element in average O(n) time and O(1) space.
+
+Assume your original array is {6,13,5,4,5,2}. After you get median element, the 'nums' is partially sorted such that the first half is larger or equal to the median, the second half is smaller or equal to the median, i.e
+
+13   6   5   5   4   2
+
+         M
+In the post https://leetcode.com/discuss/76965/3-lines-python-with-explanation-proof, we have learned that , to get wiggle sort, you want to put the number in the following way such that
+
+(1) elements smaller than the 'median' are put into the last even slots
+
+(2) elements larger than the 'median' are put into the first odd slots
+
+(3) the medians are put into the remaining slots.
+
+Index :       0   1   2   3   4   5
+Small half:   M       S       S    
+Large half:       L       L       M
+M - Median, S-Small, L-Large. In this example, we want to put {13, 6, 5} in index 1,3,5 and {5,4,2} in index {0,2,4}
+
+The index mapping, (1 + 2*index) % (n | 1) combined with 'Color sort', will do the job.
+
+After selecting the median element, which is 5 in this example, we continue as the following
+
+Mapped_idx[Left] denotes the position where the next smaller-than median element  will be inserted.
+Mapped_idx[Right] denotes the position where the next larger-than median element  will be inserted.
+
+
+Step 1: 
+Original idx: 0    1    2    3    4    5  
+Mapped idx:   1    3    5    0    2    4 
+Array:        13   6    5    5    4    2 
+             Left
+              i
+                                      Right
+ nums[Mapped_idx[i]] = nums[1] = 6 > 5, so it is ok to put 6 in the first odd index 1. We increment i and left.
+
+
+Step 2: 
+Original idx: 0    1    2    3    4    5  
+Mapped idx:   1    3    5    0    2    4 
+Array:        13   6    5    5    4    2 
+                  Left
+                   i
+                                      Right
+ nums[3] = 5 = 5, so it is ok to put 6 in the index 3. We increment i.
+
+
+Step 3: 
+Original idx: 0    1    2    3    4    5  
+Mapped idx:   1    3    5    0    2    4 
+Array:        13   6    5    5    4    2 
+                  Left
+                        i
+                                     Right
+ nums[5] = 2 < 5, so we want to put it to the last even index 4 (pointed by Right). So, we swap nums[Mapped_idx[i]] with nums[Mapped_idx[Right]], i.e. nums[5] with nums[4], and decrement Right. 
+
+
+
+
+Step 4: 
+Original idx: 0    1    2    3    4    5  
+Mapped idx:   1    3    5    0    2    4 
+Array:        13   6    5    5    2    4 
+                  Left
+                        i
+                               Right
+ nums[5] = 4 < 5, so we want to put it to the second last even index 2. So, we swap nums[5] with nums[2], and decrement Right. 
+
+
+
+
+Step 5: 
+Original idx: 0    1    2    3    4    5  
+Mapped idx:   1    3    5    0    2    4 
+Array:        13   6    4    5    2    5 
+                  Left
+                        i
+                            Right
+ nums[5] = 5 < 5, it is ok to put it there, we increment i.
+
+
+Step 6: 
+Original idx: 0    1    2    3    4    5  
+Mapped idx:   1    3    5    0    2    4 
+Array:        13   6    4    5    2    5 
+                  Left
+                             i
+                            Right
+ nums[0] = 13 > 5, so, we want to put it to the next odd index which is 3 (pointed by 'Left'). So, we swap nums[0] with nums[3], and increment 'Left' and 'i'.
+
+
+Step Final: 
+Original idx: 0    1    2    3    4    5  
+Mapped idx:   1    3    5    0    2    4 
+Array:        5    6    4    13   2    5 
+                      Left
+                                  i
+                            Right
+i > Right, we get the final wiggle array 5 6 4 13 2 5 !
+	 * 
+	 * 
+	 * 
+	 * 
+	 * @param nums
+	 */
+	public void wiggleSort(int[] nums) {
+		// did NOT AC yet
+		int median = findKthLargest(nums, (nums.length + 1) / 2);
+		int n = nums.length;
+		int left = 0, i = 0, right = n - 1;
+		while (i <= right) {
+			if (nums[newIndex(i, n)] > median) {
+				swap(nums, newIndex(left++, n), newIndex(i++, n));
+			} else if (nums[newIndex(i, n)] < median) {
+				swap(nums, newIndex(right--, n), newIndex(i, n));
+			} else {
+				i++;
+			}
+		}
+	}
+	
+	private int findKthLargest(int[] nums, int k) {
+		return findKthHelper(nums, 0, nums.length - 1, k);
+	}
+	
+	private int findKthHelper(int[] nums, int left, int right, int k) {
+		int pidx = partition(nums, left, right);
+		if (pidx == left + k - 1) {
+			return nums[pidx];
+		} else if (pidx < k - 1) {
+			return findKthHelper(nums, pidx + 1, right, k - (pidx - left) - 1);
+		} else {
+			return findKthHelper(nums, left, pidx - 1, k );
+		}
+	}
+	
+	private int partition(int[] nums, int l, int r) {
+		int pivot = nums[r];
+		int i = l, j = r - 1;
+		while (i <= j) {
+			if (nums[i] >= pivot) {
+				i++;
+				continue;
+			}
+			if (nums[j] < pivot) {
+				j--;
+				continue;
+			}
+			swap(nums, i, j);
+			i++;
+			j--;
+		}
+		swap(nums, i, r);
+		return i;
+	}
+	
+	
+	
+	private void swap(int[] nums, int i, int j) {
+		int tmp = nums[j];
+		nums[j] = nums[i];
+		nums[i] = tmp;
+	}
+	
+	private int newIndex(int index, int n) {
+		return ( 1 + 2 * index) % (n | 1);
+	}
+	
+	
+	/**
 	 * Basic idea: sort the nums,
 	 * then split into two parts, s(maller) and t(bigger) parts
 	 * for even index positions, put bigger half
 	 * for odd index positions, put smaller half
 	 * @param nums
 	 */
-	public void wiggleSort(int[] nums) {
+	public void wiggleSort_sort(int[] nums) {
 		Arrays.sort(nums);
 		int[] tmp = new int[nums.length];
 		int s = (nums.length + 1) >> 1;
@@ -61,7 +242,63 @@ public class WiggleSortII {
 
 }
 
+/**
+ * 
+https://leetcode.com/problems/wiggle-sort-ii/discuss/77681/O(n)-time-O(1)-space-solution-with-detail-explanations
 
+
+Methodology:
+
+Idea 1.
+
+As @whnzinc pointed out in this thread, all elements in nums can be classified into three categories:
+
+(1) Larger than the median;
+
+(2) Equal to the median;
+
+(3) Smaller than the median.
+
+Note that it's possible to find the median within O(n)-time and O(1)-space.
+
+Note: We can use nth_element to find the median, but it's not O(n)-time and O(1)-space. For the sake of simplicity, I might use nth_element as well.
+
+Idea 2.
+
+As @StefanPochmann pointed out in this thread, we can arrange the elements in the three categories in a deterministic way.
+
+(1) Elements that are larger than the median: we can put them in the first few odd slots;
+
+(2) Elements that are smaller than the median: we can put them in the last few even slots;
+
+(3) Elements that equal the median: we can put them in the remaining slots.
+
+Update: According to @StefanPochmann's thread, we can use a one-pass three-way partition to rearrange all elements. His idea is to re-map the indices into its destined indices, odd indices first and even indices follow.
+
+Example:
+
+Original Indices:    0  1  2  3  4  5  6  7  8  9 10 11
+Mapped Indices:      1  3  5  7  9 11  0  2  4  6  8 10
+(its reverse mapping is)
+
+Mapped Indices:      0  1  2  3  4  5  6  7  8  9 10 11
+Original Indices:    6  0  7  1  8  2  9  3 10  4 11  5   (wiggled)
+In order to achieve this, we can use a function alike
+
+int map_index(int idx, int n) {
+    return (2 * idx + 1) % (n | 1);
+}
+where (n | 1) calculates the nearest odd that is not less than n.
+
+Complexities: (On the condition that finding median is O(n)-time and O(1)-space)
+
+Time: O(n)
+
+Space: O(1)
+
+
+ * 
+ */
 
 
 
